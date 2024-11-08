@@ -5,7 +5,7 @@ useEffect(()=>{
         withCredentials: true,
     });
     eventSource.onmessage = (event)=>{
-        
+        setTeamId(parseInt(event.data))
     };
 
     return ()=>{

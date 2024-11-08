@@ -1,25 +1,17 @@
 import { useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 function App() {
-  [teamId,setTeamId] = useState(-1);
-  
-  useEffect(()=>{
-      const eventSource = new EventSource('http://localhost:3000/sendvote',{
-          withCredentials: true,
-      });
-      eventSource.onmessage = (event)=>{
-          setTeamId((prev)=>{event.data})
-      };
-  
-      return ()=>{
-          eventSource.close();
-      }
-  
-  
-  },[]);
+
 
   return (
     <>
-    <h1>{teamId}</h1>
+    <Router>
+      <Routes>
+        <Route path="/" element={<h1>Home</h1>} />
+        <Route path="/register" element={<h1>Register</h1>} />
+        <Route path="*" element={<h1>Error</h1>} />
+      </Routes>
+    </Router>
     </>
   )
 }
