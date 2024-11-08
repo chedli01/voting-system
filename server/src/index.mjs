@@ -10,6 +10,7 @@ import statusRouter from "./check/status.mjs"
 import registerRouter from "./register/register.mjs"
 import positionRouter from "./check/position.mjs"
 import votingRouter from "./vote/voting.mjs"
+import sendingVoteRouter from "./vote/sendvote.mjs"
 const app = express();
 const corsOptions = {
   origin: ["http://localhost:5173"],
@@ -36,11 +37,14 @@ const PORT = 3000 || process.env.PORT;
 
 dbconfig();
 
+CurrentVote.create({teamID:-1,voteNumber:0,time:2000})
+
 //////////////////////////
 app.use(statusRouter);
 app.use(registerRouter);
 app.use(positionRouter);
 app.use(votingRouter);
+app.use(sendingVoteRouter)
 
 
 ///////////////////////

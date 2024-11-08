@@ -6,6 +6,11 @@ const currentVoteSchema=new mongoose.Schema({
         required:true,
         unique:true
     },
+    voteNumber:{
+        type:mongoose.Schema.Types.Number,
+        required:true,
+        unique:true,
+    },
     time:{
         type:mongoose.Schema.Types.Number,
         required:true,

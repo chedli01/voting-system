@@ -16,7 +16,9 @@ route.get("/sendvote",async(req,res)=>{
           change.fullDocument.teamID != -1
         ) {
 
+
             res.write(`data: ${change.fullDocument.teamID}\n\n`)
+          
 
         }
         else if(change.updateDescription.updatedFields.teamID &&
