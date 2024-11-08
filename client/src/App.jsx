@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 function App() {
-  [teamId,setTeamId] = useState(-1);
+  const [teamId,setTeamId] = useState(-1);
   
   useEffect(()=>{
       const eventSource = new EventSource('http://localhost:3000/sendvote',{
