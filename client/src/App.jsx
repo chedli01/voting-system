@@ -9,7 +9,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<GlobalLayout />}>
-          <Route path="home" element={<h1>Home</h1>} />
+          <Route path="home" element={<HomePage />} />
           <Route path="register" element={<h1>Register</h1>} />
           <Route path="*" element={<h1>Error</h1>} />
         </Route>
