@@ -5,7 +5,7 @@ import jeiLogo from "./assets/jei2.png"
 export default function RegisterPage(){
     return(
         <div className="register-form-container">
-            <img src={jeiLogo} alt="JEILogo" width="100px" height="50ox"/>
+            <img src={jeiLogo} alt="JEILogo" width="100px" height="50px"/>
             <div className="title-container">
                 <h1 className="title-1">Hack for good</h1>
                 <h1 className="title-2">3.0</h1>

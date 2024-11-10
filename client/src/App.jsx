@@ -4,6 +4,7 @@ import GlobalLayout from "./GlobalLayout";
 import HomePage from "./HomePage";
 import "./app.css"
 import RegisterPage from "./RegisterPage";
+import Error404Page from "./Error404Page";
 function App() {
 
   return (
@@ -13,7 +14,7 @@ function App() {
         <Route path="/" element={<GlobalLayout />}>
           <Route path="home" element={<HomePage />} />
           <Route path="register" element={<RegisterPage/> }/>
-          <Route path="*" element={<h1>Error</h1>} />
+          <Route path="*" element={<Error404Page />} />
         </Route>
       </Routes>
     </Router>
