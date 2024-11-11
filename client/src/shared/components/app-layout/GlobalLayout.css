@@ -1,5 +1,5 @@
 body {
-    background-image: url('./assets/auditorium.jpg');
+    background-image: url('../../../assets/auditorium.jpg');
     background-size: cover;       /* Ensures the image covers the entire page */
     background-position: center;   /* Centers the image */
     background-attachment: fixed;  /* Optional: Keeps the image fixed during scrolling */
