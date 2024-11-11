@@ -13,8 +13,11 @@ export default function RegisterPage(){
     useEffect(()=>{
         const checkConnection = async ()=>{
             try{
-                const result = checkConnection();
-                navigate("/home")
+                const result = await checkConnection();
+                console.log(result);
+                if(result.data.isConnected){
+                    navigate("/home")
+                }
             }
             catch(error){
                 console.log(error);
