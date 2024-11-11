@@ -5,7 +5,7 @@ const routes = {
     REGISTER : baseURL + 'register',
     SEND_VOTE : baseURL + 'sendvote',
     VOTE : baseURL + 'vote/:id',
-    GET_CURRENT_VOTE : baseURL + '/currentteam',
+    GET_CURRENT_VOTE : baseURL + 'currentteam',
 }
 
 export {baseURL,routes};
