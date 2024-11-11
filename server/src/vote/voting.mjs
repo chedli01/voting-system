@@ -10,12 +10,13 @@ route.post("/vote/:id",async(req,res)=>{
     const vote=req.body.vote
     const currentvote=await CurrentVote.find();
     const id=currentvote[0].teamID
-    if(req.cookies.connectionCookie && teamId==id){
+    if(req.cookies.connectionCookie && teamId==id ){
         const user=await Voter.findOne({code:req.cookies.connectionCookie.code});
         const length=user.votes.length;
         const total=currentvote[0].voteNumber;
+        const exist=user.votes.find(element => element === teamId)!== undefined;
 
-        if(length>=0.75*total){
+        if(length>=0.75*total && !exist){
             if(vote=="yes"){
                 const nyes=await Team.findOne({id:id}).nyes
                 await Team.updateOne({id:id},{$set:{nyes:nyes+1}})
@@ -26,16 +27,17 @@ route.post("/vote/:id",async(req,res)=>{
     
     
             }
+            return res.status(201).json({voted:true})
         }
        
         else{
-            res.sendStatus(400);
+            res.status(400).json({voted:false});
         }
 
 
     }
     else{
-        res.sendStatus(400);
+        res.status(400).json({voted:false});
     }
 
 })
