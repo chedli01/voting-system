@@ -18,7 +18,7 @@ const VoteClosed = (
 
 const VoteOpen = (
     <div className="home-container vote-form-container">
-        <h1 className="vote-open-title">Your vote for team <span style={{color:'#790C18'}}>5</span></h1>
+        <h1 className="vote-open-title">Your vote for team <span style={{color:'#790C18'}}>{teamId}</span></h1>
         <form className="vote-form">
             <button name="vote-yes" id="vote-yes" type="submit" style={{backgroundColor:'#5F5A66'}}>Yes</button>
             <button name="vote-no" id="vote-no" type="submit" style={{backgroundColor:'#4D4855'}}>No</button>
@@ -30,8 +30,24 @@ const VoteOpen = (
 
 
 export default function HomePage(){
-    const [isVoteOpen,setIsVoteOpen] = useState(true);
+    const [teamId,setTeamId] = useState(-1);
     const navigate = useNavigate();
+
+    useEffect(()=>{
+        const eventSource = new EventSource('http://localhost:3000/sendvote',{
+            withCredentials: true,
+        });
+        eventSource.onmessage = (event)=>{
+            setTeamId(parseInt(event.data))
+        };
+    
+        return ()=>{
+            eventSource.close();
+        }
+    
+    
+    },[]);
+    
     useEffect(()=>{
         axios.get("http://localhost:3000/isconnected").then(
             (res)=>{
@@ -43,6 +59,6 @@ export default function HomePage(){
     },[])
 
     return( 
-        isVoteOpen ? VoteOpen:VoteClosed
+        teamId !== -1  ? VoteOpen:VoteClosed
     )
 }
