@@ -14,31 +14,32 @@ route.post("/vote/:id",async(req,res)=>{
         const user=await Voter.findOne({code:req.cookies.connectionCookie.code});
         const length=user.votes.length;
         const total=currentvote[0].voteNumber;
-        const exist=user.votes.find(element => element === teamId)!== undefined;
+        const exist=user.votes.find(element => element == teamId)!== undefined;
+        console.log(exist)
 
         if(length>=0.75*total && !exist){
             if(vote=="yes"){
-                const nyes=await Team.findOne({id:id}).nyes
-                console.log(nyes)
-                await Team.updateOne({id:id},{$set:{nyes:parseInt(nyes)+1}})
+                const nyes=await Team.findOne({id:id})
+                await Team.updateOne({id:id},{$set:{nyes:parseInt(nyes.nyes)+1}})
             }
             else{
-                const nno=await Team.findOne({id:id}).nno
-                await Team.updateOne({id:id},{$set:{nno:parseInt(nno)+1}})
+                const nno=await Team.findOne({id:id})
+                await Team.updateOne({id:id},{$set:{nno:parseInt(nno.nno)+1}})
     
     
             }
+            await Voter.updateOne({code:req.cookies.connectionCookie.code},{$push:{votes:parseInt(teamId)}})
             return res.status(201).json({voted:true})
         }
        
         else{
-            res.status(400).json({voted:false});
+            return res.status(201).json({voted:false});
         }
 
 
     }
     else{
-        res.status(400).json({voted:false});
+        return res.status(201).json({voted:false});
     }
 
 })
