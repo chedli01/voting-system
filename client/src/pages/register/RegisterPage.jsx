@@ -30,11 +30,11 @@ export default function RegisterPage(){
         event.preventDefault();
         try{
         const result = await registerUser(userInput);
+        navigate("/home");
         console.log(result);
         }
         catch(error){
             console.log(error)
-            navigate("/home")
         }
     }
 
