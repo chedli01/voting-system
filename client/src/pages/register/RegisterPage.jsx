@@ -1,12 +1,27 @@
 import "./RegisterPage.css"
 import enter from "../../assets/enter.png"
 import jeiLogo from "../../assets/jei2.png"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { registerUser } from "../../service/api";
+import { useNavigate } from "react-router-dom";
 
 export default function RegisterPage(){
 
     const [userInput,setUserInput] = useState("");
+    const navigate = useNavigate()
+
+    useEffect(()=>{
+        const checkConnection = async ()=>{
+            try{
+                const result = checkConnection();
+                navigate("/home")
+            }
+            catch(error){
+                console.log(error);
+            }
+        }
+        checkConnection();
+    },[])
 
     const submitHandler = async (event)=>{
         event.preventDefault();
@@ -16,6 +31,7 @@ export default function RegisterPage(){
         }
         catch(error){
             console.log(error)
+            navigate("/home")
         }
     }
 
