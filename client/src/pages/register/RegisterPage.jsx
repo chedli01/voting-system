@@ -1,6 +1,6 @@
 import "./RegisterPage.css"
-import enter from "./assets/enter.png"
-import jeiLogo from "./assets/jei2.png"
+import enter from "../../assets/enter.png"
+import jeiLogo from "../../assets/jei2.png"
 
 export default function RegisterPage(){
     return(
