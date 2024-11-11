@@ -6,26 +6,7 @@ import hourGlass from "../../assets/time.png"
 
 axios.defaults.withCredentials=true;
 
-const VoteClosed = (
-    <div className="home-container">
-        <img src={hourGlass} alt="hourglass" width='80px' />
-        <div className="home-vote-closed-message">
-            <p>Team <span style={{color:'#790C18'}}>2</span> is still presenting vote will open soon</p>
-        </div>
-    </div>
-)
 
-
-const VoteOpen = (
-    <div className="home-container vote-form-container">
-        <h1 className="vote-open-title">Your vote for team <span style={{color:'#790C18'}}>{teamId}</span></h1>
-        <form className="vote-form">
-            <button name="vote-yes" id="vote-yes" type="submit" style={{backgroundColor:'#5F5A66'}}>Yes</button>
-            <button name="vote-no" id="vote-no" type="submit" style={{backgroundColor:'#4D4855'}}>No</button>
-        </form>
-        <p style={{fontSize:'1.5em',fontWeight:'700'}}>01:45</p>
-    </div>
-)
 
 
 
@@ -33,6 +14,25 @@ export default function HomePage(){
     const [teamId,setTeamId] = useState(-1);
     const navigate = useNavigate();
 
+    const VoteOpen = (
+        <div className="home-container vote-form-container">
+            <h1 className="vote-open-title">Your vote for team <span style={{color:'#790C18'}}>{teamId}</span></h1>
+            <form className="vote-form">
+                <button name="vote-yes" id="vote-yes" type="submit" style={{backgroundColor:'#5F5A66'}}>Yes</button>
+                <button name="vote-no" id="vote-no" type="submit" style={{backgroundColor:'#4D4855'}}>No</button>
+            </form>
+            <p style={{fontSize:'1.5em',fontWeight:'700'}}>01:45</p>
+        </div>
+    )
+    const VoteClosed = (
+        <div className="home-container">
+            <img src={hourGlass} alt="hourglass" width='80px' />
+            <div className="home-vote-closed-message">
+                <p>Team <span style={{color:'#790C18'}}>2</span> is still presenting vote will open soon</p>
+            </div>
+        </div>
+    )
+    
     useEffect(()=>{
         const eventSource = new EventSource('http://localhost:3000/sendvote',{
             withCredentials: true,
