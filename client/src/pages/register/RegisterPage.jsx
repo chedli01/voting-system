@@ -11,7 +11,7 @@ export default function RegisterPage(){
     const navigate = useNavigate()
 
     useEffect(()=>{
-        const checkConnection = async ()=>{
+        const isConnected = async ()=>{
             try{
                 const result = await checkConnection();
                 console.log(result);
@@ -23,7 +23,7 @@ export default function RegisterPage(){
                 console.log(error);
             }
         }
-        checkConnection();
+        isConnected();
     },[])
 
     const submitHandler = async (event)=>{
