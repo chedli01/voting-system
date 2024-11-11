@@ -4,7 +4,7 @@ import jeiLogo from "../../assets/jei2.png"
 import { useEffect, useState } from "react"
 import { registerUser } from "../../service/api";
 import { useNavigate } from "react-router-dom";
-
+import { checkConnection } from "../../service/api";
 export default function RegisterPage(){
 
     const [userInput,setUserInput] = useState("");
