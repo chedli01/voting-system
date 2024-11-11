@@ -3,6 +3,7 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom";
 import './HomePage.css'
 import hourGlass from "../../assets/time.png"
+import { getCurrentTeam } from "../../service/api";
 
 axios.defaults.withCredentials=true;
 
@@ -28,18 +29,33 @@ export default function HomePage(){
         <div className="home-container">
             <img src={hourGlass} alt="hourglass" width='80px' />
             <div className="home-vote-closed-message">
-                <p>Team <span style={{color:'#790C18'}}>2</span> is still presenting vote will open soon</p>
+                <p>The team is still presenting vote will open soon</p>
             </div>
         </div>
     )
     
     useEffect(()=>{
-        const eventSource = new EventSource('http://localhost:3000/sendvote',{
-            withCredentials: true,
-        });
-        eventSource.onmessage = (event)=>{
-            setTeamId(parseInt(event.data))
-        };
+
+        const fetchTeamId = async ()=>{
+            if(teamId !== -1){
+                try{
+                    const result = await getCurrentTeam();
+                    setTeamId(result.teamID)
+                }
+                catch(error){
+    
+                }
+            }
+        }
+
+        fetchTeamId();
+
+            const eventSource = new EventSource('http://localhost:3000/sendvote',{
+                withCredentials: true,
+            });
+            eventSource.onmessage = (event)=>{
+                setTeamId(parseInt(event.data))
+            };
     
         return ()=>{
             eventSource.close();
