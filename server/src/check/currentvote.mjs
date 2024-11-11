@@ -6,7 +6,8 @@ const route = Router();
 
 route.get("/currentteam",async(req,res)=>{
     const team=await CurrentVote.find();
-    return res.status(201).json({teamID:team.teamID})
+    const id=team[0].teamID;
+    return res.status(201).json({teamID:id})
 })
 
 export default route;
