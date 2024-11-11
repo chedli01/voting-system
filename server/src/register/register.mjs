@@ -7,6 +7,7 @@ route.post("/register", async (req, res) => {
   const userCode = req.body.code;
 
   const user = await Voter.findOne({ code: userCode });
+  console.log(user)
 
   if (user) {
     res.cookie(
