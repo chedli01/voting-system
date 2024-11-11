@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import './HomePage.css';
 import hourGlass from "../../assets/time.png";
+import checkIcon from "../../assets/check-icon.png"
 import { getCurrentTeam, sendVote, voteForId } from "../../service/api";
 
 axios.defaults.withCredentials = true;
@@ -10,6 +11,7 @@ axios.defaults.withCredentials = true;
 export default function HomePage() {
     const [teamId, setTeamId] = useState(1);
     const [userVote, setUserVote] = useState(null);
+    const [hasVoted,setHasVoted] = useState(false);
     const navigate = useNavigate();
 
     const voteSubmitHandler = async (event) => {
@@ -18,6 +20,7 @@ export default function HomePage() {
         try {
             const response = await voteForId(teamId, { vote: userVote });
             console.log(response);
+            setHasVoted(true);
         } catch (error) {
             console.error(error);
         }
@@ -61,6 +64,13 @@ export default function HomePage() {
         </div>
     );
 
+    const ThankYouForYourVote = (
+        <div className="thank-you-container">
+            <h1>Thank you for your vote</h1>
+            <img src={checkIcon}/>
+        </div>
+    )
+
     useEffect(() => {
         // Fetch the team ID on mount
         const fetchTeamId = async () => {
@@ -81,6 +91,7 @@ export default function HomePage() {
         });
         eventSource.onmessage = (event) => {
             setTeamId(parseInt(event.data, 10)); // Parse to ensure a number
+            setHasVoted(false);
         };
 
         return () => {
@@ -98,6 +109,10 @@ export default function HomePage() {
             }
         );
     }, [navigate]); // Dependency on navigate
-
-    return teamId !== -1 ? VoteOpen : VoteClosed;
+    if(!hasVoted){
+        return(
+            teamId !== -1 ? VoteOpen : VoteClosed
+        )
+        return ThankYouForYourVote
+    }
 }
