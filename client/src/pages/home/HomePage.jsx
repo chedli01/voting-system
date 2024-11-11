@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import './HomePage.css';
 import hourGlass from "../../assets/time.png";
 import checkIcon from "../../assets/check-icon.png"
-import { getCurrentTeam, sendVote, voteForId } from "../../service/api";
+import { didUserVote, getCurrentTeam, sendVote, voteForId } from "../../service/api";
 
 axios.defaults.withCredentials = true;
 
@@ -12,6 +12,7 @@ export default function HomePage() {
     const [teamId, setTeamId] = useState(1);
     const [userVote, setUserVote] = useState(null);
     const [hasVoted,setHasVoted] = useState(false);
+    console.log(hasVoted)
     const navigate = useNavigate();
 
     const voteSubmitHandler = async (event) => {
@@ -20,7 +21,10 @@ export default function HomePage() {
         try {
             const response = await voteForId(teamId, { vote: userVote });
             console.log(response);
-            setHasVoted(true);
+            if(response.voted){
+                setHasVoted(true);
+                console.log(hasVoted)
+            }
         } catch (error) {
             console.error(error);
         }
@@ -72,6 +76,17 @@ export default function HomePage() {
     )
 
     useEffect(() => {
+        // Check connection status on mount
+        axios.get("http://localhost:3000/isconnected").then(
+            (res) => {
+                if (!res.data.connected) {
+                    navigate("/register");
+                }
+            }
+        );
+    }, [navigate]); // Dependency on navigate
+
+    useEffect(() => {
         // Fetch the team ID on mount
         const fetchTeamId = async () => {
             try {
@@ -99,20 +114,26 @@ export default function HomePage() {
         };
     }, []); // Only run once on mount
 
-    useEffect(() => {
-        // Check connection status on mount
-        axios.get("http://localhost:3000/isconnected").then(
-            (res) => {
-                if (!res.data.connected) {
-                    navigate("/register");
-                }
+    useEffect(()=>{
+        const checkHasVoted = async ()=>{
+            try{
+                const result = await didUserVote();
+                console.log(result)
+                if(result.hasVoted){setHasVoted(true)}
+                else{setHasVoted(false)}
             }
-        );
-    }, [navigate]); // Dependency on navigate
+            catch(error){
+
+            }
+        }
+        checkHasVoted()
+    },[])
     if(!hasVoted){
         return(
             teamId !== -1 ? VoteOpen : VoteClosed
         )
-        return ThankYouForYourVote
+    
     }
+    else         return ThankYouForYourVote
+
 }

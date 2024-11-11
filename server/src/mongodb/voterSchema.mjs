@@ -7,9 +7,7 @@ const voterSchema=new mongoose.Schema({
         unique:true
     },
     votes:{
-        type:mongoose.Schema.Types.Array,
-        required:true,
-        unique:true,
+        type:mongoose.Schema.Types.Array,        
     }
 
 })

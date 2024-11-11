@@ -76,3 +76,13 @@ export const checkConnection = async () => {
       throw error;
     }
   };
+
+  export const didUserVote = async () => {
+    try {
+      const response = await apiClient.get(routes.HAS_VOTED); 
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching has voted value',error);
+      throw error;
+    }
+  };
