@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom";
 import './HomePage.css'
-import hourGlass from "./assets/time.png"
+import hourGlass from "../../assets/time.png"
 
 axios.defaults.withCredentials=true;
 
