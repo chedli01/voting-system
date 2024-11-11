@@ -4,7 +4,7 @@ import GlobalLayout from "./GlobalLayout";
 import HomePage from "./HomePage";
 import "./app.css"
 import RegisterPage from "./RegisterPage";
-import Error404Page from "./Error404Page";
+import Error404Page from "./pages/error/Error404Page"
 function App() {
 
   return (
