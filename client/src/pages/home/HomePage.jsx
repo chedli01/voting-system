@@ -37,7 +37,6 @@ export default function HomePage(){
     useEffect(()=>{
 
         const fetchTeamId = async ()=>{
-            if(teamId !== -1){
                 try{
                     const result = await getCurrentTeam();
                     setTeamId(result.teamID)
@@ -45,7 +44,6 @@ export default function HomePage(){
                 catch(error){
     
                 }
-            }
         }
 
         fetchTeamId();
