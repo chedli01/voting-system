@@ -3,7 +3,7 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom";
 import './HomePage.css'
 import hourGlass from "../../assets/time.png"
-import { getCurrentTeam } from "../../service/api";
+import { getCurrentTeam, sendVote, voteForId } from "../../service/api";
 
 axios.defaults.withCredentials=true;
 
@@ -13,14 +13,26 @@ axios.defaults.withCredentials=true;
 
 export default function HomePage(){
     const [teamId,setTeamId] = useState(-1);
+    const [userVote,setUserVote] = useState(null);
     const navigate = useNavigate();
+
+    const voteSubmitHandler = async (event)=>{
+        event.preventDefault();
+        try{
+        const response = await voteForId(teamId,{vote:userVote});
+        console.log(response);
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
 
     const VoteOpen = (
         <div className="home-container vote-form-container">
             <h1 className="vote-open-title">Your vote for team <span style={{color:'#790C18'}}>{teamId}</span></h1>
-            <form className="vote-form">
-                <button name="vote-yes" id="vote-yes" type="submit" style={{backgroundColor:'#5F5A66'}}>Yes</button>
-                <button name="vote-no" id="vote-no" type="submit" style={{backgroundColor:'#4D4855'}}>No</button>
+            <form className="vote-form" onSubmit={voteSubmitHandler}>
+                <button name="vote-yes" id="vote-yes" type="submit" onClick={setUserVote('yes')} style={{backgroundColor:'#5F5A66'}}>Yes</button>
+                <button name="vote-no" id="vote-no" type="submit"  onClick={setUserVote('no')} style={{backgroundColor:'#4D4855'}}>No</button>
             </form>
             <p style={{fontSize:'1.5em',fontWeight:'700'}}>01:45</p>
         </div>
