@@ -11,6 +11,7 @@ import registerRouter from "./register/register.mjs"
 import positionRouter from "./check/position.mjs"
 import votingRouter from "./vote/voting.mjs"
 import sendingVoteRouter from "./vote/sendvote.mjs"
+import currentVoteRouter from "./check/currentvote.mjs"
 const app = express();
 const corsOptions = {
   origin: ["http://localhost:5173"],
@@ -44,6 +45,7 @@ app.use(registerRouter);
 app.use(positionRouter);
 app.use(votingRouter);
 app.use(sendingVoteRouter)
+app.use(currentVoteRouter)
 
 ///////////////////////
 app.listen(PORT, () => {
