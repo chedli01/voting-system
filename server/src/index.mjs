@@ -37,7 +37,6 @@ const PORT = 3000 || process.env.PORT;
 
 dbconfig();
 
-CurrentVote.create({teamID:-1,voteNumber:0,time:2000})
 
 //////////////////////////
 app.use(statusRouter);
@@ -45,7 +44,6 @@ app.use(registerRouter);
 app.use(positionRouter);
 app.use(votingRouter);
 app.use(sendingVoteRouter)
-
 
 ///////////////////////
 app.listen(PORT, () => {
