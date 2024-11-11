@@ -15,7 +15,7 @@ export default function RegisterPage(){
             try{
                 const result = await checkConnection();
                 console.log(result);
-                if(result.data.connected){
+                if(result.connected){
                     navigate("/home")
                 }
             }
