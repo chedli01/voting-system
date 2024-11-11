@@ -25,12 +25,12 @@ route.post("/verifyPosition",async(req,res)=>{
 
     if(distance<=radius){
 
-        res.json({valid:true})
+        res.status(201).json({valid:true})
 
     }
     else{
 
-        res.json({valid:true})
+        res.status(400).json({valid:false})
 
     }
 
