@@ -31,8 +31,8 @@ export default function HomePage(){
         <div className="home-container vote-form-container">
             <h1 className="vote-open-title">Your vote for team <span style={{color:'#790C18'}}>{teamId}</span></h1>
             <form className="vote-form" onSubmit={voteSubmitHandler}>
-                <button name="vote-yes" id="vote-yes" type="submit" onClick={setUserVote('yes')} style={{backgroundColor:'#5F5A66'}}>Yes</button>
-                <button name="vote-no" id="vote-no" type="submit"  onClick={setUserVote('no')} style={{backgroundColor:'#4D4855'}}>No</button>
+                <button name="vote-yes" id="vote-yes" type="submit" onClick={()=>{setUserVote('yes')}} style={{backgroundColor:'#5F5A66'}}>Yes</button>
+                <button name="vote-no" id="vote-no" type="submit"  onClick={()=>{setUserVote('no')}} style={{backgroundColor:'#4D4855'}}>No</button>
             </form>
             <p style={{fontSize:'1.5em',fontWeight:'700'}}>01:45</p>
         </div>
