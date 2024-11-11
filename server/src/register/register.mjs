@@ -19,9 +19,9 @@ route.post("/register", async (req, res) => {
         sameSite: "lax",
       }
     );
-    return res.json({ status: "succeeded" });
+    return res.status(201).json({ status: "succeeded" });
   } else {
-    return res.json({ status: "failed" });
+    return res.status(201).json({ status: "failed" });
   }
 });
 
