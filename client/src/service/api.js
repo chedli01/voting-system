@@ -66,3 +66,13 @@ export const checkConnection = async () => {
       throw error;
     }
   };
+
+  export const getCurrentTeam = async () => {
+    try {
+      const response = await apiClient.get(routes.GET_CURRENT_VOTE); 
+      return response.data;
+    } catch (error) {
+      console.error('Error getting team id',error);
+      throw error;
+    }
+  };

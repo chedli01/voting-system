@@ -4,7 +4,8 @@ const routes = {
     VERIFY_POSITION : baseURL + 'verifyPosition',
     REGISTER : baseURL + 'register',
     SEND_VOTE : baseURL + 'sendvote',
-    VOTE : baseURL + 'vote/:id'
+    VOTE : baseURL + 'vote/:id',
+    GET_CURRENT_VOTE : baseURL + '/currentteam',
 }
 
 export {baseURL,routes};
