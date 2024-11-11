@@ -19,11 +19,12 @@ route.post("/vote/:id",async(req,res)=>{
         if(length>=0.75*total && !exist){
             if(vote=="yes"){
                 const nyes=await Team.findOne({id:id}).nyes
-                await Team.updateOne({id:id},{$set:{nyes:nyes+1}})
+                console.log(nyes)
+                await Team.updateOne({id:id},{$set:{nyes:parseInt(nyes)+1}})
             }
             else{
                 const nno=await Team.findOne({id:id}).nno
-                await Team.updateOne({id:id},{$set:{nno:nno+1}})
+                await Team.updateOne({id:id},{$set:{nno:parseInt(nno)+1}})
     
     
             }
