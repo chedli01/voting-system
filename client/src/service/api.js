@@ -1,6 +1,6 @@
 import axios from "axios";
 import { baseURL } from "./apiRoutes";
-import { Route } from "react-router-dom";
+import { routes } from "./apiRoutes";
 
 const apiClient = axios.create({
     baseURL: baseURL,
@@ -36,7 +36,7 @@ export const checkConnection = async () => {
 
   export const registerUser = async (userData) => {
     try {
-      const response = await apiClient.post(routes.REGISTER, userData);  
+      const response = await apiClient.post(routes.REGISTER, {code : userData});  
       return response.data;
     } catch (error) {
       console.error('Error in registerUser:', error);
