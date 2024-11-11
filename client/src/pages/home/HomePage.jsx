@@ -45,22 +45,23 @@ export default function HomePage(){
             </div>
         </div>
     )
+
+    useEffect(()=>{
+        const fetchTeamId = async ()=>{
+            try{
+                const result = await getCurrentTeam();
+                setTeamId(result.teamID)
+            }
+            catch(error){
+
+            }
+    }
+
+    fetchTeamId();
+    },[])
     
     useEffect(()=>{
-
-        const fetchTeamId = async ()=>{
-                try{
-                    const result = await getCurrentTeam();
-                    setTeamId(result.teamID)
-                }
-                catch(error){
-    
-                }
-        }
-
-        fetchTeamId();
-
-            const eventSource = new EventSource('http://localhost:3000/sendvote',{
+           const eventSource = new EventSource('http://localhost:3000/sendvote',{
                 withCredentials: true,
             });
             eventSource.onmessage = (event)=>{
