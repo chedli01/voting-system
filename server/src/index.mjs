@@ -17,8 +17,8 @@ import fs from 'fs';
 import https from 'https'
 
 const sslOptions = {
-  cert: fs.readFileSync('/home/juniorentreprise/ssl/certs/voting_jeinsat_com_b3467_4e76f_1739204081_2e382c7909bbf6759c8663fc06424aac.crt'),
-  key: fs.readFileSync('/home/juniorentreprise/ssl/keys/b3467_4e76f_03f374f85221b3c8addbb5fdbe6fd4c9.key'),
+  cert: fs.readFileSync('/home/juniorentreprise/ssl/certs/voting_jeinsat_com_c4db9_840e3_1762943989_53d3ad256671084ff0c9b2f34e6382b3.crt'),
+  key: fs.readFileSync('/home/juniorentreprise/ssl/keys/c4db9_840e3_fe52a9e7ac9ed9aee3c39c97d44cb916.key'),
 };
 
 const app = express();
