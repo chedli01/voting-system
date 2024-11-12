@@ -7,7 +7,7 @@ const route = Router();
 
 route.post("/vote/:id",async(req,res)=>{
     const teamId=req.params.id;
-    const vote=req.body.vote
+    const vote=req.body.vote;
     const currentvote=await CurrentVote.find();
     const id=currentvote[0].teamID
     if(req.cookies.connectionCookie && teamId==id ){
@@ -15,8 +15,6 @@ route.post("/vote/:id",async(req,res)=>{
         const length=user.votes.length;
         const total=currentvote[0].voteNumber;
         const exist=user.votes.find(element => element == teamId)!== undefined;
-        console.log(exist)
-
         if(length>=0.75*total && !exist){
             if(vote=="yes"){
                 const nyes=await Team.findOne({id:id})
