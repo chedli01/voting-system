@@ -1,4 +1,4 @@
-const baseURL = 'http://102.219.179.69:3000/';
+const baseURL = 'https://102.219.179.69:3000/';
 const routes = {
     IS_CONNECTED : baseURL + 'isconnected',
     VERIFY_POSITION : baseURL + 'verifyPosition',
