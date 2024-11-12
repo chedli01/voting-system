@@ -1,6 +1,6 @@
 {
   "name": "client",
-  "homepage": "./",
+  "homepage": "/voting/client",
   "private": true,
   "version": "0.0.0",
   "type": "module",
