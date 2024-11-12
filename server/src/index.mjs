@@ -1,6 +1,9 @@
 import express from "express";
 import cors from "cors";
 import session from "express-session";
+import path from "path";
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 import cookieParser from "cookie-parser";
 import dbconfig from "./mongodb/connect.mjs";
 import Voter from "./mongodb/voterSchema.mjs";
@@ -14,6 +17,8 @@ import sendingVoteRouter from "./vote/sendvote.mjs"
 import currentVoteRouter from "./check/currentvote.mjs"
 import hasVotedRouter from "./check/hasvoted.mjs"
 const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 const corsOptions = {
   origin: ["http://localhost:5173"],
   credentials: true,
@@ -34,7 +39,7 @@ app.use(
     },
   })
 );
-const PORT = 3000 || process.env.PORT;
+
 
 
 dbconfig();
@@ -51,6 +56,18 @@ app.use(hasVotedRouter)
 
 
 ///////////////////////
+const PORT = 3000 || process.env.PORT;
+
+
+app.use(express.static(path.join(__dirname,"../../client/dist")))
+app.get("*",(req,res)=>{
+  res.sendFile(path.join(__dirname,"../../client/dist","index.html"))
+})
+
+
+
+
+/////////////////////////
 app.listen(PORT, () => {
   console.log(`server running on port ${PORT}`);
 });
