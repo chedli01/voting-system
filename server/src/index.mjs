@@ -17,7 +17,9 @@ const app = express();
 const corsOptions = {
   origin: ["*"],
   credentials: true,
-  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"], // Add custom headers you expect
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+  preflightContinue: false,
+  optionsSuccessStatus: 200, // Add custom headers you expect
 };
 
 app.use(cors(corsOptions));
