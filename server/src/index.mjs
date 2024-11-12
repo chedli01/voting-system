@@ -17,6 +17,7 @@ const app = express();
 const corsOptions = {
   origin: ["https://voting.jeinsat.com", "http://localhost:3000"],
   credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"], // Add custom headers you expect
 };
 
 app.use(cors(corsOptions));
