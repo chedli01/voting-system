@@ -17,6 +17,8 @@
     "express": "^4.21.1",
     "express-session": "^1.18.1",
     "express-validator": "^7.2.0",
+    "fs": "^0.0.1-security",
+    "https": "^1.0.0",
     "mongoose": "^8.8.0",
     "my-mern-app": "file:..",
     "path": "^0.12.7",
