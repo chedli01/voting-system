@@ -67,6 +67,6 @@ app.use(currentVoteRouter)
 app.use(hasVotedRouter)
 
 /////////////////////////
-app.listen(PORT,"0.0.0.0", () => {
+app.listen(PORT,"102.219.179.69", () => {
   console.log(`server running on port ${PORT}`);
 });
