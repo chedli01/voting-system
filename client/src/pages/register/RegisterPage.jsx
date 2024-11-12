@@ -10,7 +10,7 @@ export default function RegisterPage(){
     const [userInput,setUserInput] = useState("");
     const navigate = useNavigate()
 
-    /* useEffect(()=>{
+    useEffect(()=>{
         const isConnected = async ()=>{
             try{
                 const result = await checkConnection();
@@ -24,7 +24,7 @@ export default function RegisterPage(){
             }
         }
         isConnected();
-    },[]) */
+    },[])
 
     const submitHandler = async (event)=>{
         event.preventDefault();
