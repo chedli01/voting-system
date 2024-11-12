@@ -20,7 +20,7 @@ const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const corsOptions = {
-  origin: ["http://voting.jeinsat.com"],
+  origin: ["https://voting.jeinsat.com"],
   credentials: true,
 };
 app.use(cors(corsOptions));
