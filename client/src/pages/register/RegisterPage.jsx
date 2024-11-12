@@ -7,10 +7,10 @@ import { useNavigate } from "react-router-dom";
 import { checkConnection } from "../../service/api";
 export default function RegisterPage(){
 
-    /* const [userInput,setUserInput] = useState("");
+    const [userInput,setUserInput] = useState("");
     const navigate = useNavigate()
 
-    useEffect(()=>{
+    /* useEffect(()=>{
         const isConnected = async ()=>{
             try{
                 const result = await checkConnection();
