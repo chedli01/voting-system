@@ -18,7 +18,7 @@ function App() {
         </Route>
       </Routes>
     </Router> */}
-    <RegisterPage />
+    <h1>Bras lemmima ekhdem</h1>
     </>
   )
 }
