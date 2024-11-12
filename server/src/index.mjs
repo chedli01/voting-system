@@ -19,6 +19,7 @@ const corsOptions = {
   credentials: true,
   allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"], // Add custom headers you expect
 };
+app.options('*', cors(corsOptions));  // Handle all preflight requests
 
 app.use(cors(corsOptions));
 app.use(express.json());
