@@ -15,7 +15,7 @@ import currentVoteRouter from "./check/currentvote.mjs"
 import hasVotedRouter from "./check/hasvoted.mjs"
 const app = express();
 const corsOptions = {
-  origin: ["https://voting.jeinsat.com", "http://localhost:3000"],
+  origin: ["*"],
   credentials: true,
   allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"], // Add custom headers you expect
 };
