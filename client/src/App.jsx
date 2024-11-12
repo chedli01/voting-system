@@ -9,7 +9,7 @@ function App() {
 
   return (
     <>
-    <Router>
+    {/* <Router>
       <Routes>
         <Route path="/" element={<GlobalLayout />}>
           <Route path="home" element={<HomePage />} />
@@ -17,7 +17,8 @@ function App() {
           <Route path="*" element={<Error404Page />} />
         </Route>
       </Routes>
-    </Router>
+    </Router> */}
+    <RegisterPage />
     </>
   )
 }
