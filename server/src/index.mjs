@@ -19,7 +19,7 @@ import hasVotedRouter from "./check/hasvoted.mjs"
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-console.log(__dirname)
+console.log(path.join(__dirname,"../../client/dist"))
 const corsOptions = {
   origin: ["https://voting.jeinsat.com"],
   credentials: true,
