@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { checkConnection } from "../../service/api";
 export default function RegisterPage(){
 
-    const [userInput,setUserInput] = useState("");
+    /* const [userInput,setUserInput] = useState("");
     const navigate = useNavigate()
 
     useEffect(()=>{
@@ -24,7 +24,7 @@ export default function RegisterPage(){
             }
         }
         isConnected();
-    },[])
+    },[]) */
 
     const submitHandler = async (event)=>{
         event.preventDefault();
