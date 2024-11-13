@@ -9,7 +9,7 @@ import { checkConnection, didUserVote, getCurrentTeam, sendVote, voteForId } fro
 axios.defaults.withCredentials = true;
 
 export default function HomePage() {
-    const [teamId, setTeamId] = useState(1);
+    const [teamId, setTeamId] = useState(-1);
     const [userVote, setUserVote] = useState(null);
     const [hasVoted,setHasVoted] = useState(false);
     console.log(hasVoted)
