@@ -64,6 +64,10 @@ const PORT = 3000 || process.env.PORT;
 
 dbconfig();
 
+Voter.create({code:"123456"})
+CurrentVote.create({teamID:-1,voteNumber:0,time:2000})
+Team.create({id:1,name:"batata"},{id:2,name:"bbc"})
+
 
 //////////////////////////
 app.use(statusRouter);
