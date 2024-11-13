@@ -1,4 +1,4 @@
-const baseURL = 'https://voting.jeinsat.com/api';
+const baseURL = 'https://voting.jeinsat.com/api/';
 const routes = {
     IS_CONNECTED : baseURL + 'isconnected',
     VERIFY_POSITION : baseURL + 'verifyPosition',
