@@ -6,7 +6,7 @@ route.get("/api/isconnected",async(req,res)=>{
     else{
         return res.json({connected:false})
     } */
-   return res.json({connected:false})
+   return res.json({connected:true})
 })
 
 export default route;
