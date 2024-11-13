@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import './HomePage.css';
 import hourGlass from "../../assets/time.png";
 import checkIcon from "../../assets/check-icon.png"
-import { didUserVote, getCurrentTeam, sendVote, voteForId } from "../../service/api";
+import { checkConnection, didUserVote, getCurrentTeam, sendVote, voteForId } from "../../service/api";
 
 axios.defaults.withCredentials = true;
 
@@ -76,14 +76,18 @@ export default function HomePage() {
     )
 
     useEffect(() => {
-        // Check connection status on mount
-        axios.get("http://localhost:3000/isconnected").then(
-            (res) => {
-                if (!res.data.connected) {
-                    navigate("/register");
+        const verifyConnection = async ()=>{
+            try{
+                const result = await checkConnection()
+                if(!result.connected){
+                    navigate("/register")
                 }
             }
-        );
+            catch(error){
+
+            }
+        }
+        verifyConnection()
     }, [navigate]); // Dependency on navigate
 
     useEffect(() => {
@@ -101,7 +105,7 @@ export default function HomePage() {
 
     useEffect(() => {
         // Set up EventSource to listen for changes in teamId
-        const eventSource = new EventSource('http://localhost:3000/sendvote', {
+        const eventSource = new EventSource('https://voting.jeinsat.com/api/sendvote', {
             withCredentials: true,
         });
         eventSource.onmessage = (event) => {
