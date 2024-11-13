@@ -3,7 +3,7 @@ import Voter from "../mongodb/voterSchema.mjs";
 
 const route = Router();
 
-route.post("/register", async (req, res) => {
+route.post("/api/register", async (req, res) => {
   const userCode = req.body.code;
 
   const user = await Voter.findOne({ code: userCode });

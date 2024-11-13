@@ -4,7 +4,7 @@ import Voter from "../mongodb/voterSchema.mjs";
 
 const route = Router();
 
-route.get("/hasvoted",async(req,res)=>{
+route.get("/api/hasvoted",async(req,res)=>{
     const team=await CurrentVote.find();
     const currentTeamID=team[0].teamID;
     const code=req.cookies.connectionCookie?.code;

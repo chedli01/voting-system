@@ -4,7 +4,7 @@ import CurrentVote from "../mongodb/currentVoteSchema.mjs";
 const route = Router();
 
 
-route.get("/sendvote",async(req,res)=>{
+route.get("/api/sendvote",async(req,res)=>{
     res.setHeader("Content-Type", "text/event-stream");
     res.setHeader("Cache-Control", "no-cache");
     res.setHeader("Connection", "keep-alive");

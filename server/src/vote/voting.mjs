@@ -5,7 +5,7 @@ import Voter from "../mongodb/voterSchema.mjs";
 
 const route = Router();
 
-route.post("/vote/:id",async(req,res)=>{
+route.post("/api/vote/:id",async(req,res)=>{
     const teamId=req.params.id;
     const vote=req.body.vote
     const currentvote=await CurrentVote.find();
