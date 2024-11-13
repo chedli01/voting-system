@@ -17,8 +17,8 @@ import fs from 'fs';
 import https from 'https'
 
 const sslOptions = {
-  cert: fs.readFileSync('../server.cert'),
-  key: fs.readFileSync('../server.key'),
+  cert: fs.readFileSync('/home/juniorentreprise/public_html/voting.jeinsat.com/voting-system/server/server.cert'),
+  key: fs.readFileSync('/home/juniorentreprise/public_html/voting.jeinsat.com/voting-system/server/server.key'),
 };
 
 const app = express();
