@@ -13,8 +13,8 @@ import votingRouter from "./vote/voting.mjs"
 import sendingVoteRouter from "./vote/sendvote.mjs"
 import currentVoteRouter from "./check/currentvote.mjs"
 import hasVotedRouter from "./check/hasvoted.mjs"
-import fs from 'fs';
-import https from 'https'
+/* import fs from 'fs';
+import https from 'https' */
 
 const sslOptions = {
   cert: fs.readFileSync('/home/juniorentreprise/ssl/certs/voting_jeinsat_com_b3467_4e76f_1739204081_2e382c7909bbf6759c8663fc06424aac.crt'),
@@ -55,7 +55,7 @@ app.use(
       // sameSite: 'None',       // Allows cross-origin cookies
 
       maxAge: 1000 * 60 * 60 * 24,
-      secure: true,
+      secure: false,
     },
   })
 );
@@ -75,6 +75,10 @@ app.use(currentVoteRouter)
 app.use(hasVotedRouter)
 
 /////////////////////////
-https.createServer(sslOptions, app).listen(PORT,"102.219.179.69", () => {
+/* https.createServer(sslOptions, app).listen(PORT,"102.219.179.69", () => {
   console.log(`server running on port ${PORT}`);
 });
+ */
+app.listen(PORT,"102.219.179.69", () => {
+  console.log(`server running on port ${PORT}`);
+})
