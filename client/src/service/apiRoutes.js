@@ -1,4 +1,4 @@
-const baseURL = 'http://102.219.179.69:3000/api/';
+const baseURL = 'https://voting.jeinsat.com/api';
 const routes = {
     IS_CONNECTED : baseURL + 'isconnected',
     VERIFY_POSITION : baseURL + 'verifyPosition',
