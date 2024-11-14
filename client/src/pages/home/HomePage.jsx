@@ -5,7 +5,7 @@ import './HomePage.css';
 import hourGlass from "../../assets/time.png";
 import checkIcon from "../../assets/check-icon.png"
 import { didUserVote, getCurrentTeam, sendVote, voteForId } from "../../service/api";
-
+import { routes } from "../../service/apiRoutes";
 axios.defaults.withCredentials = true;
 
 export default function HomePage() {
