@@ -54,13 +54,17 @@ const PORT = 3000 || process.env.PORT;
 
 
 // Serve React frontend
-app.use(express.static(path.join(process.cwd(), "client", "dist")));
-console.log(path.join(process.cwd(), "client", "dist"))
+const distPath = path.resolve(dirname(fileURLToPath(import.meta.url)), '../../client/dist');
+console.log("Serving React from:", distPath);
 
+app.use(express.static(distPath));
+
+// Catch-all route for frontend
 app.get("*", (req, res) => {
-    res.sendFile(path.join(process.cwd(), "client", "dist", "index.html"));
+  res.sendFile(path.join(distPath, "index.html"));
 });
 
+console.log(distPath)
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
