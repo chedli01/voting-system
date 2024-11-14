@@ -9,7 +9,7 @@ import { didUserVote, getCurrentTeam, sendVote, voteForId } from "../../service/
 axios.defaults.withCredentials = true;
 
 export default function HomePage() {
-    const [teamId, setTeamId] = useState(1);
+    const [teamId, setTeamId] = useState(-1);
     const [userVote, setUserVote] = useState(null);
     const [hasVoted,setHasVoted] = useState(false);
     console.log(hasVoted)
@@ -76,14 +76,18 @@ export default function HomePage() {
     )
 
     useEffect(() => {
-        // Check connection status on mount
-        axios.get("http://localhost:3000/isconnected").then(
-            (res) => {
-                if (!res.data.connected) {
-                    navigate("/register");
+        const verifyConnection = async ()=>{
+            try{
+                const result = await checkConnection()
+                if(!result.connected){
+                    navigate("/register")
                 }
             }
-        );
+            catch(error){
+
+            }
+        }
+        verifyConnection()
     }, [navigate]); // Dependency on navigate
 
     useEffect(() => {
@@ -101,7 +105,7 @@ export default function HomePage() {
 
     useEffect(() => {
         // Set up EventSource to listen for changes in teamId
-        const eventSource = new EventSource('http://localhost:3000/sendvote', {
+        const eventSource = new EventSource(routes.sendVote, {
             withCredentials: true,
         });
         eventSource.onmessage = (event) => {
