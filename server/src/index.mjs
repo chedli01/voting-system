@@ -17,13 +17,7 @@ import sendingVoteRouter from "./vote/sendvote.mjs"
 import currentVoteRouter from "./check/currentvote.mjs"
 import hasVotedRouter from "./check/hasvoted.mjs"
 const app = express();
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const corsOptions = {
-  origin: ["http://localhost:5173"],
-  credentials: true,
-};
-app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(
@@ -59,15 +53,14 @@ app.use(hasVotedRouter)
 const PORT = 3000 || process.env.PORT;
 
 
-app.use(express.static(path.join(__dirname,"../../client/dist")))
-app.get("*",(req,res)=>{
-  res.sendFile(path.join(__dirname,"../../client/dist","index.html"))
-})
+// Serve React frontend
+app.use(express.static(path.join(process.cwd(), "client", "dist")));
+console.log(path.join(process.cwd(), "client", "dist"))
 
+app.get("*", (req, res) => {
+    res.sendFile(path.join(process.cwd(), "client", "dist", "index.html"));
+});
 
-
-
-/////////////////////////
-app.listen(PORT,"0.0.0.0", () => {
-  console.log(`server running on port ${PORT}`);
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
