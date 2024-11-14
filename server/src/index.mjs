@@ -16,13 +16,22 @@ import votingRouter from "./vote/voting.mjs"
 import sendingVoteRouter from "./vote/sendvote.mjs"
 import currentVoteRouter from "./check/currentvote.mjs"
 import hasVotedRouter from "./check/hasvoted.mjs"
+import dotenv from "dotenv"
+
+
+dotenv.config()
+// Use environment variables
+const PORT = process.env.PORT || 3000;
+const mongoUri = process.env.MONGO_URI;
+const sessionSecret = process.env.SESSION_SECRET;
+
 const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(
   session({
-    secret: "secret",
+    secret: `${sessionSecret}`,
     saveUninitialized: false,
     resave: false,
     cookie: {
@@ -36,7 +45,7 @@ app.use(
 
 
 
-dbconfig();
+dbconfig(mongoUri);
 
 
 //////////////////////////
@@ -49,8 +58,7 @@ app.use(currentVoteRouter)
 app.use(hasVotedRouter)
 
 
-///////////////////////
-const PORT = 3000 || process.env.PORT;
+
 
 
 // Serve React frontend
