@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import './HomePage.css';
 import hourGlass from "../../assets/time.png";
 import checkIcon from "../../assets/check-icon.png"
-import { didUserVote, getCurrentTeam, sendVote, voteForId } from "../../service/api";
+import { didUserVote, getCurrentTeam, sendVote, voteForId,checkConnection } from "../../service/api";
 import { routes } from "../../service/apiRoutes";
 axios.defaults.withCredentials = true;
 
@@ -105,7 +105,7 @@ export default function HomePage() {
 
     useEffect(() => {
         // Set up EventSource to listen for changes in teamId
-        const eventSource = new EventSource(routes.sendVote, {
+        const eventSource = new EventSource(routes.SEND_VOTE, {
             withCredentials: true,
         });
         eventSource.onmessage = (event) => {
