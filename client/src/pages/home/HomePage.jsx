@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import './HomePage.css';
 import hourGlass from "../../assets/time.png";
 import checkIcon from "../../assets/check-icon.png"
-import { didUserVote, getCurrentTeam, sendVote, voteForId,checkConnection } from "../../service/api";
+import { didUserVote, getCurrentTeam, sendVote, voteForId,checkConnection,verifyPosition } from "../../service/api";
 import { routes } from "../../service/apiRoutes";
 axios.defaults.withCredentials = true;
 
@@ -15,6 +15,22 @@ export default function HomePage() {
     const [hasVoted,setHasVoted] = useState(false);
     console.log(hasVoted)
     const navigate = useNavigate();
+    const checkPosition = async ()=>{
+        navigator.geolocation.getCurrentPosition(
+                async(position) => {
+                    const userLatitude = position.coords.latitude;
+                    const userLongitude = position.coords.longitude;
+                    console.log(`your latitude : ${userLatitude}  your longitude : ${userLongitude}`)
+                    const result=await  verifyPosition({latitude:userLatitude,longitude:userLongitude});
+                    console.log(result.valid)
+                },
+                (error) => {
+                    console.error("Geolocation error:", error);
+                },
+                { enableHighAccuracy: true }
+            );
+       
+    }
 
     const voteSubmitHandler = async (event) => {
         console.log(userVote)
@@ -75,6 +91,10 @@ export default function HomePage() {
             <img src={checkIcon}/>
         </div>
     )
+    useEffect(()=>{
+      
+        checkPosition();
+    },[])
 
     useEffect(() => {
         const verifyConnection = async ()=>{
