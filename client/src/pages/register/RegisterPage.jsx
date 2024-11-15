@@ -1,5 +1,6 @@
 import "./RegisterPage.css"
 import enter from "../../assets/enter.png"
+import React from "react"
 import jeiLogo from "../../assets/jei2.png"
 import { useEffect, useState } from "react"
 import { registerUser } from "../../service/api";

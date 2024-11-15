@@ -1,0 +1,51 @@
+services:
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile  # Dockerfile for the backend
+    networks:
+      - app-network  # Connect MongoDB to this network
+    ports:
+      - "3000:3000"
+    volumes:
+      - dist_data:/app/client/dist  # Mount shared volume here
+    env_file:
+      - ./server/.env
+    depends_on:
+      - mongo
+
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile  # Dockerfile for the frontend (React Vite app)
+    networks:
+      - app-network  # Connect MongoDB to this network
+    ports:
+      - "80:80"  # Expose port 80 of Nginx (frontend)
+    volumes:
+      - dist_data:/app/client/dist  # Mount shared volume here
+    env_file:
+      - ./client/.env
+    depends_on:
+      - backend  # Make sure backend starts before frontend
+
+  mongo:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    command: ["--replSet", "rs0","--bind_ip_all", "--port", "27017"] 
+    networks:
+      - app-network  # Connect MongoDB to this network
+    volumes:
+      - "mongo_data:/data/db"
+      - "mongo_config:/data/configdb"
+
+networks:
+  app-network:
+    external: true
+
+volumes:
+  mongo_data:
+  mongo_config:
+  dist_data:
