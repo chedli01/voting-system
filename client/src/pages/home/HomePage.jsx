@@ -22,7 +22,7 @@ export default function HomePage() {
                     const userLongitude = position.coords.longitude;
                     const result=await  verifyPosition({latitude:userLatitude,longitude:userLongitude});
                     console.log(result.valid)
-                    if(!result.valid){navigate("/xx")}
+                    // if(!result.valid){navigate("/xx")}
                 },
                 (error) => {
                     console.error("Geolocation error:", error);
