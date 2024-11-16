@@ -26,7 +26,7 @@ services:
       - "443:443" # Expose HTTPS port (443)
     volumes:
       - dist_data:/app/client/dist  # Mount shared volume here
-      - /home/azureuser/voting.jeinsat.com:/etc
+      - /home/azureuser/voting.jeinsat.com:/etc/letsencrypt
     env_file:
       - ./client/.env
     depends_on:

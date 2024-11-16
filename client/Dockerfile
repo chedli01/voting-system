@@ -16,6 +16,9 @@ RUN npm run build
 # Step 2: Serve the app using Nginx
 FROM nginx:alpine
 
+# Create the /etc/letsencrypt directory
+RUN mkdir -p /etc/letsencrypt
+
 # Copy the build output from the build stage to Nginx's public folder
 COPY --from=build /app/dist /usr/share/nginx/html
 
