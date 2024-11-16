@@ -13,7 +13,7 @@ import hasVotedRouter from "./check/hasvoted.mjs"
 import dotenv from "dotenv"
 
 const corsOptions = {
-  origin:"http://localhost:80", // Adjust the URL to your React container's URL
+  origin:"https://voting.jeinsat.com", // Adjust the URL to your React container's URL
   methods: ["GET", "POST", "PUT", "DELETE"], // Allow the necessary HTTP methods
   credentials: true, // Allows cookies to be sent between frontend and backend
 };
