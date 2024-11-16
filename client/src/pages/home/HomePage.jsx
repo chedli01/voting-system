@@ -115,6 +115,7 @@ export default function HomePage() {
         };
         eventSource.onerror = () => {
             console.log('Connection lost. Reconnecting...');
+            window.location.reload();
         };
         
 
