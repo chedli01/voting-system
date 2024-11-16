@@ -133,6 +133,11 @@ export default function HomePage() {
             setTeamId(parseInt(event.data, 10)); // Parse to ensure a number
             setHasVoted(false);
         };
+        eventSource.onerror = () => {
+            console.log('Connection lost. Reconnecting...');
+            window.location.reload();
+        };
+        
 
         return () => {
             eventSource.close(); // Clean up on unmount
