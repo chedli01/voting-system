@@ -20,14 +20,14 @@ export default function HomePage() {
                 async(position) => {
                     const userLatitude = position.coords.latitude;
                     const userLongitude = position.coords.longitude;
-                    console.log(`your latitude : ${userLatitude}  your longitude : ${userLongitude}`)
                     const result=await  verifyPosition({latitude:userLatitude,longitude:userLongitude});
                     console.log(result.valid)
+                    if(!result.valid){navigate("/xx")}
                 },
                 (error) => {
                     console.error("Geolocation error:", error);
                 },
-                { enableHighAccuracy: true }
+                { enableHighAccuracy: true,timeout: 1000*120,maximumAge: 0,}
             );
        
     }
