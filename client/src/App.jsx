@@ -6,15 +6,17 @@ import HomePage from "./pages/home/HomePage"
 import "./app.css"
 import RegisterPage from "./pages/register/RegisterPage"
 import Error404Page from "./pages/error/Error404Page"
+import { Navigate } from "react-router-dom";
 function App() {
 
   return (
     <React.Fragment>
     <Router>
       <Routes>
-        <Route path="/" element={<GlobalLayout />}>
-          <Route path="home" element={<HomePage />} />
-          <Route path="register" element={<RegisterPage/> }/>
+        <Route path="/" element={<Navigate to="/home" replace />} />
+        <Route element={<GlobalLayout />}>
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/register" element={<RegisterPage/> }/>
           <Route path="*" element={<Error404Page />} />
         </Route>
       </Routes>
