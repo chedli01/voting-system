@@ -38,7 +38,7 @@
 #register-form-submit {
     background: none;
     border: 2px solid white;
-    border-radius: 1em;
+    border-radius: 10px;
     background-color: #790C18;
     position: absolute;  
     right: 5%;         
