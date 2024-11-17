@@ -11,6 +11,28 @@ import { useReducer } from "react";
 
 axios.defaults.withCredentials = true;
 
+const initialState = {
+    teamId: -1,
+    hasVoted: false,
+    userVote: null,
+    mode: 'voteIsClosed', // 'voteIsOpen', 'thankYouForVoting'
+};
+
+const reducer = (state, action) => {
+    switch (action.type) {
+        case "SET_TEAM_ID":
+            return { ...state, teamId: action.payload };
+        case "SET_HAS_VOTED":
+            return { ...state, hasVoted: action.payload };
+        case "SET_USER_VOTE":
+            return { ...state, userVote: action.payload };
+        case "SET_MODE":
+            return { ...state, mode: action.payload };
+        default:
+            return state;
+    }
+};
+
 export default function HomePage() {
     const [state, dispatch] = useReducer(reducer, initialState);
     const navigate = useNavigate();
