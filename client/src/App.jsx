@@ -17,7 +17,7 @@ function App() {
         <Route element={<GlobalLayout />}>
           <Route path="/home" element={<HomePage />} />
           <Route path="/register" element={<RegisterPage/> }/>
-          <Route path="*" element={<Error404Page />} />
+          <Route path="/*" element={<Error404Page />} />
         </Route>
       </Routes>
     </Router>
