@@ -1,11 +1,16 @@
 html, body {
     height: 100%;
     margin: 0;
+    padding: 0;
     overflow: hidden; /* Prevent scrolling on body */
     font-family: 'JetBrains Mono';
 }
 #root {
-    height: 100%; /* Ensures root element takes full height */
+    height: 100%; 
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
 }
 img{
     display: block;
