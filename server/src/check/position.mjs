@@ -16,16 +16,19 @@ function getDistance(lat1, lon1, lat2, lon2) {
 route.post("/api/verifyPosition",async(req,res)=>{
     const eventLatitude = 36.842594; // replace with your event's latitude
     const eventLongitude = 10.1973297; // replace with your event's longitude
+    const eventAccuracy=18;
 
-    const userLatitude=req.body.latitude;
-    const userLongitude=req.body.longitude;
+    const userLatitude=parseFloat(req.body.latitude);
+    const userLongitude=parseFloat(req.body.longitude);
+    const accuracy=parseFloat(req.body.accuracy)
     /* const radius = 10; */
     //high radius for testing purposes
     const radius = 1000
+    const adjustedRadius=radius+accuracy+eventAccuracy
 
     const distance= await getDistance(userLatitude,userLongitude,eventLatitude,eventLongitude)
 
-    if(distance<=radius){
+    if(distance<=adjustedRadius){
 
         res.status(201).json({valid:true})
 

@@ -54,7 +54,8 @@ export default function HomePage() {
                 async (position) => {
                     const userLatitude = position.coords.latitude;
                     const userLongitude = position.coords.longitude;
-                    const result = await verifyPosition({ latitude: userLatitude, longitude: userLongitude });
+                    const accuracy=position.coords.accuracy;
+                    const result = await verifyPosition({ latitude: userLatitude, longitude: userLongitude,accuracy:accuracy });
                     if (!result.valid) {
                         navigate("*", {
                             state: {

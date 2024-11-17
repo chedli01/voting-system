@@ -15,20 +15,23 @@ route.post("/api/vote/:id",async(req,res)=>{
         const length=user.votes.length;
         const total=currentvote[0].voteNumber;
         const exist=user.votes.find(element => element == teamId)!== undefined;
-        console.log(exist)
+        
 
         if(length>=0.75*total && !exist){
+            const team=await Team.findOne({id:id});
+            const nyes=team.nyes;
+            const nno=team.nno;
             if(vote=="yes"){
-                const nyes=await Team.findOne({id:id})
-                await Team.updateOne({id:id},{$set:{nyes:parseInt(nyes.nyes)+1}})
+                await Team.updateOne({id:id},{$set:{nyes:parseInt(nyes)+1}})
+                Team.updateOne({id:id},{$set:{score:(nyes+1)/nno}});
             }
             else{
-                const nno=await Team.findOne({id:id})
-                await Team.updateOne({id:id},{$set:{nno:parseInt(nno.nno)+1}})
-    
-    
+                await Team.updateOne({id:id},{$set:{nno:parseInt(nno)+1}})
+                Team.updateOne({id:id},{$set:{score:nyes/(nno+1)}});
             }
-            await Voter.updateOne({code:req.cookies.connectionCookie.code},{$push:{votes:parseInt(teamId)}})
+            await Voter.updateOne({code:req.cookies.connectionCookie.code},{$push:{votes:parseInt(teamId)}});
+           
+            
             return res.status(201).json({voted:true})
         }
        
