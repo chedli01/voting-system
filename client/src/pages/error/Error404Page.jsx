@@ -5,7 +5,7 @@ export default function Error404Page(){
     const message = location.state?.message || "404 Oops..! Nothing here";
     return(
         <div>
-            <h1>message</h1>
+            <h1>{message}</h1>
         </div>
         
     )
