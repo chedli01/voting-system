@@ -41,6 +41,8 @@ export default function HomePage() {
         try {
             const result = await getCurrentTeam();
             dispatch({ type: "SET_TEAM_ID", payload: result.teamID });
+            result.teamID == -1 ? dispatch({ type: "SET_MODE", payload: "voteIsClosed" }):
+                              dispatch({ type: "SET_MODE", payload: "voteIsOpen" });
         } catch (error) {
             console.error("Error fetching team ID", error);
         }
