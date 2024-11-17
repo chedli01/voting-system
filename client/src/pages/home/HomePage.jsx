@@ -94,12 +94,23 @@ export default function HomePage() {
         }
     };
 
-    // useEffect hooks
     useEffect(() => {
-        checkPosition();
-        verifyConnection();
-        fetchTeamId();
-        checkHasVoted();
+        const initializePage = async () => {
+            try {
+
+                await verifyConnection();
+
+                await verifyConnection();
+    
+                await fetchTeamId();
+    
+                await checkHasVoted();
+            } catch (error) {
+                console.error("Error during initialization:", error);
+            }
+        };
+    
+        initializePage();
     }, []);
 
     useEffect(() => {
