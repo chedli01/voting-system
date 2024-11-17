@@ -129,7 +129,8 @@ export default function HomePage() {
             const newTeamId = parseInt(event.data, 10);
             dispatch({ type: "SET_TEAM_ID", payload: newTeamId });
             dispatch({ type: "SET_HAS_VOTED", payload: false });
-            dispatch({ type: "SET_MODE", payload: "voteIsClosed" });
+            newTeamId == -1 ? dispatch({ type: "SET_MODE", payload: "voteIsClosed" }):
+                              dispatch({ type: "SET_MODE", payload: "voteIsOpen" });
         };
         eventSource.onerror = () => {
             console.log('Connection lost. Reconnecting...');
