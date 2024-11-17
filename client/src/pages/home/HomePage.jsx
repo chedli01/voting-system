@@ -110,19 +110,11 @@ export default function HomePage() {
     useEffect(() => {
         const initializePage = async () => {
             try {
-                // Step 1: Verify connection
-                await verifyConnection();
-
-                // Step 2: Check user's geolocation
                 await checkPosition();
-
-                // Step 3: Fetch the current team ID
+                await verifyConnection();
                 await fetchTeamId();
-
-                // Step 4: Check if the user has already voted
                 await checkHasVoted();
-
-                setIsLocationChecked(true); // Mark location check as complete
+                setIsLocationChecked(true);
             } catch (error) {
                 console.error("Error during initialization:", error);
             }
