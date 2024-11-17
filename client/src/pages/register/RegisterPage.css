@@ -39,10 +39,13 @@
     background: none;
     border: 2px solid white;
     border-radius: 1em;
-    position: relative;
-    left: 150px;
-    bottom: 43px;
     background-color: #790C18;
+    position: absolute;  
+    right: 5%;         
+    top: 50%;            
+    transform: translateY(-50%);  
+    cursor: pointer;
+    padding: 0;
 }
 
 

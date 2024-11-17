@@ -47,7 +47,7 @@ export default function RegisterPage(){
                 <h1 className="title-2">3.0</h1>
             </div>
             <h2 style={{fontSize:'1em', color:'rgba(255,255,255,0.55)'}}>Voting System</h2>
-            <form onSubmit={submitHandler}>
+            <form onSubmit={submitHandler} style={{display:'relative'}}>
                 <input type="text" name="unique-code" id="unique-code" placeholder="Enter your code" value={userInput} onChange={(e)=>{setUserInput(e.target.value)}}/>
                 <button id="register-form-submit" type="submit"><img src={enter} width='24px' height='30px'/></button>
             </form>
