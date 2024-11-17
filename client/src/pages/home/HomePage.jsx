@@ -53,7 +53,7 @@ export default function HomePage() {
                 const userLatitude = position.coords.latitude;
                 const userLongitude = position.coords.longitude;
                 const result = await verifyPosition({ latitude: userLatitude, longitude: userLongitude });
-                if (!result.valid) navigate("/xx");
+                if (!result.valid) navigate("*",{state:{message:"Voting is only available inside the auditorium. Please enter the venue to proceed."}});
             },
             (error) => console.error("Geolocation error:", error),
             { enableHighAccuracy: true, timeout: 1000 * 120, maximumAge: 0 }
