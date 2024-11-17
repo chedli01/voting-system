@@ -100,7 +100,7 @@ export default function HomePage() {
 
                 await verifyConnection();
 
-                await verifyConnection();
+                await verifyPosition();
     
                 await fetchTeamId();
     
