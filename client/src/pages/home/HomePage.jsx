@@ -1,13 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useReducer } from "react";
 import axios from "axios";
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import './HomePage.css';
 import hourGlass from "../../assets/time.png";
-import checkIcon from "../../assets/check-icon.png"
-import { didUserVote, getCurrentTeam, sendVote, voteForId,checkConnection,verifyPosition } from "../../service/api";
+import checkIcon from "../../assets/check-icon.png";
+import { didUserVote, getCurrentTeam, sendVote, voteForId, checkConnection, verifyPosition } from "../../service/api";
 import { routes } from "../../service/apiRoutes";
-import { useReducer } from "react";
 
 axios.defaults.withCredentials = true;
 
@@ -35,6 +33,7 @@ const reducer = (state, action) => {
 
 export default function HomePage() {
     const [state, dispatch] = useReducer(reducer, initialState);
+    const [isLocationChecked, setIsLocationChecked] = useState(false); // Track geolocation status
     const navigate = useNavigate();
 
     // Async functions
@@ -48,16 +47,29 @@ export default function HomePage() {
     };
 
     const checkPosition = async () => {
-        navigator.geolocation.getCurrentPosition(
-            async (position) => {
-                const userLatitude = position.coords.latitude;
-                const userLongitude = position.coords.longitude;
-                const result = await verifyPosition({ latitude: userLatitude, longitude: userLongitude });
-                if (!result.valid) navigate("*",{state:{message:"Voting is only available inside the auditorium. Please enter the venue to proceed."}});
-            },
-            (error) => console.error("Geolocation error:", error),
-            { enableHighAccuracy: true, timeout: 1000 * 120, maximumAge: 0 }
-        );
+        return new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(
+                async (position) => {
+                    const userLatitude = position.coords.latitude;
+                    const userLongitude = position.coords.longitude;
+                    const result = await verifyPosition({ latitude: userLatitude, longitude: userLongitude });
+                    if (!result.valid) {
+                        navigate("*", {
+                            state: {
+                                message: "Voting is only available inside the auditorium. Please enter the venue to proceed.",
+                            },
+                        });
+                        reject("Invalid position");
+                    }
+                    resolve();
+                },
+                (error) => {
+                    console.error("Geolocation error:", error);
+                    reject("Geolocation error");
+                },
+                { enableHighAccuracy: true, timeout: 1000 * 120, maximumAge: 0 }
+            );
+        });
     };
 
     const verifyConnection = async () => {
@@ -97,19 +109,23 @@ export default function HomePage() {
     useEffect(() => {
         const initializePage = async () => {
             try {
-
+                // Step 1: Verify connection
                 await verifyConnection();
 
-                await checkPosition(); 
-    
+                // Step 2: Check user's geolocation
+                await checkPosition();
+
+                // Step 3: Fetch the current team ID
                 await fetchTeamId();
-    
+
+                // Step 4: Check if the user has already voted
                 await checkHasVoted();
+                setIsLocationChecked(true); // Mark location check as complete
             } catch (error) {
                 console.error("Error during initialization:", error);
             }
         };
-    
+
         initializePage();
     }, []);
 
@@ -177,6 +193,11 @@ export default function HomePage() {
             <img src={checkIcon} alt="check-icon" />
         </div>
     );
+
+    // Wait until location check is complete before rendering the vote UI
+    if (!isLocationChecked) {
+        return <div>Loading...</div>; // Display a loading message or spinner
+    }
 
     // Render based on mode
     if (state.mode === "voteIsOpen") return VoteOpen;
