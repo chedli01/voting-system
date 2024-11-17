@@ -7,57 +7,110 @@ import hourGlass from "../../assets/time.png";
 import checkIcon from "../../assets/check-icon.png"
 import { didUserVote, getCurrentTeam, sendVote, voteForId,checkConnection,verifyPosition } from "../../service/api";
 import { routes } from "../../service/apiRoutes";
+import { useReducer } from "react";
+
 axios.defaults.withCredentials = true;
 
 export default function HomePage() {
-    const [teamId, setTeamId] = useState(-1);
-    const [userVote, setUserVote] = useState(null);
-    const [hasVoted,setHasVoted] = useState(false);
-    console.log(hasVoted)
+    const [state, dispatch] = useReducer(reducer, initialState);
     const navigate = useNavigate();
-    const checkPosition = async ()=>{
-        navigator.geolocation.getCurrentPosition(
-                async(position) => {
-                    const userLatitude = position.coords.latitude;
-                    const userLongitude = position.coords.longitude;
-                    const result=await  verifyPosition({latitude:userLatitude,longitude:userLongitude});
-                    console.log(result.valid)
-                    // if(!result.valid){navigate("/xx")}
-                },
-                (error) => {
-                    console.error("Geolocation error:", error);
-                },
-                { enableHighAccuracy: true,timeout: 1000*120,maximumAge: 0,}
-            );
-       
-    }
 
-    const voteSubmitHandler = async (event) => {
-        console.log(userVote)
-        event.preventDefault();
+    // Async functions
+    const fetchTeamId = async () => {
         try {
-            const response = await voteForId(teamId, { vote: userVote });
-            console.log(response);
-            if(response.voted){
-                setHasVoted(true);
-                console.log(hasVoted)
-            }
+            const result = await getCurrentTeam();
+            dispatch({ type: "SET_TEAM_ID", payload: result.teamID });
         } catch (error) {
-            console.error(error);
+            console.error("Error fetching team ID", error);
         }
     };
 
+    const checkPosition = async () => {
+        navigator.geolocation.getCurrentPosition(
+            async (position) => {
+                const userLatitude = position.coords.latitude;
+                const userLongitude = position.coords.longitude;
+                const result = await verifyPosition({ latitude: userLatitude, longitude: userLongitude });
+                if (!result.valid) navigate("/xx");
+            },
+            (error) => console.error("Geolocation error:", error),
+            { enableHighAccuracy: true, timeout: 1000 * 120, maximumAge: 0 }
+        );
+    };
+
+    const verifyConnection = async () => {
+        try {
+            const result = await checkConnection();
+            if (!result.connected) navigate("/register");
+        } catch (error) {
+            console.error("Error verifying connection", error);
+        }
+    };
+
+    const checkHasVoted = async () => {
+        try {
+            const result = await didUserVote();
+            if (result.hasVoted) {
+                dispatch({ type: "SET_HAS_VOTED", payload: true });
+                dispatch({ type: "SET_MODE", payload: "thankYouForVoting" });
+            }
+        } catch (error) {
+            console.error("Error checking vote status", error);
+        }
+    };
+
+    const voteSubmitHandler = async (event, userVote) => {
+        event.preventDefault();
+        try {
+            const response = await voteForId(state.teamId, { vote: userVote });
+            if (response.voted) {
+                dispatch({ type: "SET_HAS_VOTED", payload: true });
+                dispatch({ type: "SET_MODE", payload: "thankYouForVoting" });
+            }
+        } catch (error) {
+            console.error("Error submitting vote", error);
+        }
+    };
+
+    // useEffect hooks
+    useEffect(() => {
+        checkPosition();
+        verifyConnection();
+        fetchTeamId();
+        checkHasVoted();
+    }, []);
+
+    useEffect(() => {
+        const eventSource = new EventSource(routes.SEND_VOTE, { withCredentials: true });
+        eventSource.onmessage = (event) => {
+            const newTeamId = parseInt(event.data, 10);
+            dispatch({ type: "SET_TEAM_ID", payload: newTeamId });
+            dispatch({ type: "SET_HAS_VOTED", payload: false });
+            dispatch({ type: "SET_MODE", payload: "voteIsClosed" });
+        };
+        eventSource.onerror = () => {
+            console.log('Connection lost. Reconnecting...');
+            window.location.reload();
+        };
+
+        return () => eventSource.close();
+    }, []);
+
+    // UI Components
     const VoteOpen = (
         <div className="home-container vote-form-container">
             <h1 className="vote-open-title">
-                Your vote for team <span style={{ color: '#790C18' }}>{teamId}</span>
+                Your vote for team <span style={{ color: '#790C18' }}>{state.teamId}</span>
             </h1>
-            <form className="vote-form" onSubmit={voteSubmitHandler}>
+            <form
+                className="vote-form"
+                onSubmit={(event) => voteSubmitHandler(event, state.userVote)}
+            >
                 <button
                     name="vote-yes"
                     id="vote-yes"
                     type="submit"
-                    onClick={() => setUserVote('yes')}
+                    onClick={() => dispatch({ type: "SET_USER_VOTE", payload: "yes" })}
                     style={{ backgroundColor: '#5F5A66' }}
                 >
                     Yes
@@ -66,7 +119,7 @@ export default function HomePage() {
                     name="vote-no"
                     id="vote-no"
                     type="submit"
-                    onClick={() => setUserVote('no')}
+                    onClick={() => dispatch({ type: "SET_USER_VOTE", payload: "no" })}
                     style={{ backgroundColor: '#4D4855' }}
                 >
                     No
@@ -88,82 +141,12 @@ export default function HomePage() {
     const ThankYouForYourVote = (
         <div className="thank-you-container">
             <h1>Thank you for your vote</h1>
-            <img src={checkIcon}/>
+            <img src={checkIcon} alt="check-icon" />
         </div>
-    )
-    useEffect(()=>{
-      
-        checkPosition();
-    },[])
+    );
 
-    useEffect(() => {
-        const verifyConnection = async ()=>{
-            try{
-                const result = await checkConnection()
-                if(!result.connected){
-                    navigate("/register")
-                }
-            }
-            catch(error){
-
-            }
-        }
-        verifyConnection()
-    }, [navigate]); // Dependency on navigate
-
-    useEffect(() => {
-        // Fetch the team ID on mount
-        const fetchTeamId = async () => {
-            try {
-                const result = await getCurrentTeam();
-                setTeamId(result.teamID);
-            } catch (error) {
-                console.error("Error fetching team ID", error);
-            }
-        };
-        fetchTeamId();
-    }, []);
-
-    useEffect(() => {
-        // Set up EventSource to listen for changes in teamId
-        const eventSource = new EventSource(routes.SEND_VOTE, {
-            withCredentials: true,
-        });
-        eventSource.onmessage = (event) => {
-            setTeamId(parseInt(event.data, 10)); // Parse to ensure a number
-            setHasVoted(false);
-        };
-        eventSource.onerror = () => {
-            console.log('Connection lost. Reconnecting...');
-            window.location.reload();
-        };
-        
-
-        return () => {
-            eventSource.close(); // Clean up on unmount
-        };
-    }, []); // Only run once on mount
-
-    useEffect(()=>{
-        const checkHasVoted = async ()=>{
-            try{
-                const result = await didUserVote();
-                console.log(result)
-                if(result.hasVoted){setHasVoted(true)}
-                else{setHasVoted(false)}
-            }
-            catch(error){
-
-            }
-        }
-        checkHasVoted()
-    },[])
-    if(!hasVoted){
-        return(
-            teamId !== -1 ? VoteOpen : VoteClosed
-        )
-    
-    }
-    else         return ThankYouForYourVote
-
+    // Render based on mode
+    if (state.mode === "voteIsOpen") return VoteOpen;
+    if (state.mode === "thankYouForVoting") return ThankYouForYourVote;
+    return VoteClosed;
 }
