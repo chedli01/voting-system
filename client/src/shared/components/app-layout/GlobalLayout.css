@@ -1,11 +1,11 @@
 body {
     background-image: url('../../../assets/auditorium.jpg');
-    background-size: cover;       /* Ensures the image covers the entire page */
-    background-position: center;   /* Centers the image */
-    background-attachment: fixed;  /* Optional: Keeps the image fixed during scrolling */
-    margin: 0;                     /* Remove default margin */
-    padding: 0;                    /* Remove default padding */
-    height: 100vh;                 /* Ensure body takes full viewport height */
+    background-size: cover;       
+    background-position: center;  
+    background-attachment: fixed;  
+    margin: 0;                    
+    padding: 0;                   
+    height: 100vh;                 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,7 +14,7 @@ body {
 
 body::before {
     content: "";                  
-    position: absolute;            
+    position: fixed;            
     top: 0;                       
     left: 0;                     
     width: 100%;                 

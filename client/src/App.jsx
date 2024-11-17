@@ -15,6 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/home" replace />} />
         <Route element={<GlobalLayout />}>
+          <Route path="/test" /> 
           <Route path="/home" element={<HomePage />} />
           <Route path="/register" element={<RegisterPage/> }/>
           <Route path="/*" element={<Error404Page />} />
