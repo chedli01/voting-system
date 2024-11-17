@@ -60,8 +60,9 @@ export default function HomePage() {
                             },
                         });
                         reject("Invalid position");
+                    } else {
+                        resolve(); // Resolve the promise if the position is valid
                     }
-                    resolve();
                 },
                 (error) => {
                     console.error("Geolocation error:", error);
@@ -120,6 +121,7 @@ export default function HomePage() {
 
                 // Step 4: Check if the user has already voted
                 await checkHasVoted();
+
                 setIsLocationChecked(true); // Mark location check as complete
             } catch (error) {
                 console.error("Error during initialization:", error);
@@ -127,7 +129,7 @@ export default function HomePage() {
         };
 
         initializePage();
-    }, []);
+    }, []); // Empty dependency array ensures this runs once on component mount
 
     useEffect(() => {
         const eventSource = new EventSource(routes.SEND_VOTE, { withCredentials: true });
