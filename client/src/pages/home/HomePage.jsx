@@ -11,7 +11,7 @@ axios.defaults.withCredentials = true;
 
 const initialState = {
     teamId: -1,
-  /*   hasVoted: false, */
+    hasVoted: false,
    /*  userVote: null, */
     mode: 'voteIsClosed', // 'voteIsOpen', 'thankYouForVoting'
 };
@@ -88,7 +88,7 @@ export default function HomePage() {
         }
     };
 
-    /* const checkHasVoted = async () => {
+    const checkHasVoted = async () => {
         try {
             const result = await didUserVote();
             if (result.hasVoted) {
@@ -98,14 +98,14 @@ export default function HomePage() {
         } catch (error) {
             console.error("Error checking vote status", error);
         }
-    }; */
+    };
 
     const voteSubmitHandler = async (event, userVote) => {
         event.preventDefault();
         try {
-            /* const response = await voteForId(state.teamId, { vote: userVote }); */
+            const response = voteForId(state.teamId, { vote: userVote });
             if (true) {
-            /*     dispatch({ type: "SET_HAS_VOTED", payload: true }); */
+                dispatch({ type: "SET_HAS_VOTED", payload: true });
                 dispatch({ type: "SET_MODE", payload: "thankYouForVoting" });
             }
         } catch (error) {
@@ -119,7 +119,7 @@ export default function HomePage() {
                 await checkPosition();
                 await verifyConnection();
                 await fetchTeamId();
-                /* await checkHasVoted(); */
+                await checkHasVoted();
                 setIsLocationChecked(true);
             } catch (error) {
                 setIsLocationChecked(true)
@@ -135,7 +135,7 @@ export default function HomePage() {
         eventSource.onmessage = (event) => {
             const newTeamId = parseInt(event.data, 10);
             dispatch({ type: "SET_TEAM_ID", payload: newTeamId });
-          /*   dispatch({ type: "SET_HAS_VOTED", payload: false }); */
+            dispatch({ type: "SET_HAS_VOTED", payload: false });
             newTeamId == -1 ? dispatch({ type: "SET_MODE", payload: "voteIsClosed" }):
                               dispatch({ type: "SET_MODE", payload: "voteIsOpen" });
         };
