@@ -27,9 +27,9 @@ route.post("/api/verifyPosition",async(req,res)=>{
     const adjustedRadius=radius+10
     
     const distance= await getDistance(userLatitude,userLongitude,eventLatitude,eventLongitude)
-   /*  console.log("distance : ",distance)
+    console.log("distance : ",distance)
     console.log("adjusted : ",adjustedRadius);
-    console.log("accuracy :",accuracy) */
+    console.log("accuracy :",accuracy)
 
 
 
