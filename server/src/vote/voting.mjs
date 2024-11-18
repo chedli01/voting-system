@@ -17,7 +17,7 @@ route.post("/api/vote/:id",async(req,res)=>{
         const exist=user.votes.find(element => element == teamId)!== undefined;
         
 
-        if(length>=0.75*total && !exist){
+        if(length>=Math.floor(0.75*total) && !exist){
             const team=await Team.findOne({id:id});
             const nyes=team.nyes;
             const nno=team.nno;
