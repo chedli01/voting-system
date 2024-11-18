@@ -48,21 +48,7 @@ dbconfig(mongoUri);
 
 
 
-function generateRandomCode(length) {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let result = '';
-  for (let i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * characters.length));
-  }
-  return result;
-}
 
-for (let i = 0; i < 600; i++) {
-  Voter.create({
-    code: generateRandomCode(5),
-    votes: []
-  });
-}
 
 // Routers
 app.use(statusRouter);
