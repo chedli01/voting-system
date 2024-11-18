@@ -58,7 +58,7 @@ function generateRandomCode(length) {
 }
 
 for (let i = 0; i < 600; i++) {
-  Voter.insertOne({
+  Voter.create({
     code: generateRandomCode(5),
     votes: []
   });
