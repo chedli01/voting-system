@@ -34,6 +34,7 @@ const reducer = (state, action) => {
 export default function HomePage() {
     const [state, dispatch] = useReducer(reducer, initialState);
     const [isLocationChecked, setIsLocationChecked] = useState(false); // Track geolocation status
+    const [locationAllowed,setLocationAllowed] = useState(false);
     const navigate = useNavigate();
 
     // Async functions
@@ -57,13 +58,15 @@ export default function HomePage() {
                     const accuracy=position.coords.accuracy;
                     const result = await verifyPosition({ latitude: userLatitude, longitude: userLongitude,accuracy:accuracy });
                     if (!result.valid) {
-                        navigate("*", {
+                        /* navigate("*", {
                             state: {
                                 message: "Voting is only available inside the auditorium. Please enter the venue to proceed.",
                             },
-                        });
+                        }); */
+                        setLocationAllowed(false);
                         reject("Invalid position");
                     } else {
+                        setLocationAllowed(true);
                         resolve(); // Resolve the promise if the position is valid
                     }
                 },
@@ -198,6 +201,12 @@ export default function HomePage() {
     }
 
     // Render based on mode
+    if(locationAllowed === false) return (<div>
+    <h1 style={{
+        fontSize:'1em',
+        textAlign:'center'
+    }}>Voting is only available inside the auditorium. Please enter the venue to proceed.</h1>
+</div>);
     if (state.mode === "voteIsOpen") return VoteOpen;
     if (state.mode === "thankYouForVoting") return ThankYouForYourVote;
     return VoteClosed;
