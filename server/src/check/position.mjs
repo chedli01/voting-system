@@ -18,9 +18,9 @@ route.post("/api/verifyPosition",async(req,res)=>{
     const eventLongitude = 10.197701558429161; // replace with your event's longitude
     const eventAccuracy=50;
 
-    const userLatitude=parseFloat(req.body.latitude);
-    const userLongitude=parseFloat(req.body.longitude);
-    const accuracy=parseFloat(req.body.accuracy)
+    const userLatitude=req.body.latitude;
+    const userLongitude=req.body.longitude;
+    const accuracy=req.body.accuracy
     /* const radius = 10; */
     //high radius for testing purposes
     const radius = 10
