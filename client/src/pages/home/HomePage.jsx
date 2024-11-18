@@ -122,6 +122,7 @@ export default function HomePage() {
                 await checkHasVoted();
                 setIsLocationChecked(true);
             } catch (error) {
+                setIsLocationChecked(true)
                 console.error("Error during initialization:", error);
             }
         };
