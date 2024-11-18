@@ -34,7 +34,7 @@ route.post("/api/verifyPosition",async(req,res)=>{
 
 
 
-    if(distance-Math.abs(accuracy-eventAccuracy)<=adjustedRadius){
+    if(distance<=adjustedRadius+accuracy){
 
         res.status(201).json({valid:true})
 
