@@ -11,6 +11,7 @@ import sendingVoteRouter from "./vote/sendvote.mjs"
 import currentVoteRouter from "./check/currentvote.mjs"
 import hasVotedRouter from "./check/hasvoted.mjs"
 import dotenv from "dotenv"
+import Voter from "./mongodb/voterSchema.mjs";
 
 const corsOptions = {
   origin:"https://voting.jeinsat.com", // Adjust the URL to your React container's URL
@@ -44,6 +45,24 @@ app.use(
 );
 
 dbconfig(mongoUri);
+
+
+
+function generateRandomCode(length) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return result;
+}
+
+for (let i = 0; i < 600; i++) {
+  Voter.insertOne({
+    code: generateRandomCode(5),
+    votes: []
+  });
+}
 
 // Routers
 app.use(statusRouter);
