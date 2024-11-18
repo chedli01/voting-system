@@ -25,8 +25,10 @@ route.post("/api/verifyPosition",async(req,res)=>{
     //high radius for testing purposes
     const radius = 10
     const adjustedRadius=radius+Math.abs(accuracy-eventAccuracy)
-
+    console.log(accuracy);
+    console.log(adjustedRadius)
     const distance= await getDistance(userLatitude,userLongitude,eventLatitude,eventLongitude)
+    console.log(distance)
 
     if(distance<=adjustedRadius){
 
