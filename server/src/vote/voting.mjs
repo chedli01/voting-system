@@ -22,12 +22,15 @@ route.post("/api/vote/:id",async(req,res)=>{
             const nyes=team.nyes;
             const nno=team.nno;
             if(vote=="yes"){
+                const score=(nyes+1)/(nno+nyes+1)
                 await Team.updateOne({id:id},{$set:{nyes:parseInt(nyes)+1}})
-                Team.updateOne({id:id},{$set:{score:(nyes+1)/(nno+nyes+1)}});
+                await Team.updateOne({id:id},{$set:{score:score}});
             }
             else{
+                const score=nyes/(nno+1+nyes)
                 await Team.updateOne({id:id},{$set:{nno:parseInt(nno)+1}})
-                Team.updateOne({id:id},{$set:{score:nyes/(nno+1+nyes)}});
+               
+                await Team.updateOne({id:id},{$set:{score:score}});
             }
             await Voter.updateOne({code:req.cookies.connectionCookie.code},{$push:{votes:parseInt(teamId)}});
            
