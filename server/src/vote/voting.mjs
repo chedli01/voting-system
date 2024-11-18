@@ -12,12 +12,10 @@ route.post("/api/vote/:id",async(req,res)=>{
     const id=currentvote[0].teamID
     if(req.cookies.connectionCookie && teamId==id ){
         const user=await Voter.findOne({code:req.cookies.connectionCookie.code});
-        const length=user.votes.length;
-        const total=currentvote[0].voteNumber;
         const exist=user.votes.find(element => element == teamId)!== undefined;
         
 
-        if(length>=Math.floor(0.5*total) && !exist){
+        if(!exist){
             const team=await Team.findOne({id:id});
             const nyes=team.nyes;
             const nno=team.nno;
