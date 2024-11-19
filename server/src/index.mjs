@@ -15,6 +15,7 @@ import Voter from "./mongodb/voterSchema.mjs";
 import fs from 'fs';
 import { Parser } from 'json2csv';
 import path from 'path';
+import Voter from "./mongodb/voterSchema.mjs";
 
 const corsOptions = {
   origin:"https://voting.jeinsat.com", // Adjust the URL to your React container's URL
@@ -48,6 +49,34 @@ app.use(
 );
 
 dbconfig(mongoUri);
+
+
+// Function to generate a random code
+function generateRandomCode(length) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return result;
+}
+
+// Generate codes and insert into database
+const codes = [];
+for (let i = 0; i < 600; i++) {
+  const code = generateRandomCode(5);
+  codes.push(code);
+
+  // Example database insertion (replace Voter.insertOne with actual DB logic)
+   Voter.insertOne({
+     code: code,
+     votes: []
+   });
+}
+
+// Save generated codes to a text file
+fs.writeFileSync('codes.txt', codes.join('\n'));
+
 // Routers
 app.use(statusRouter);
 app.use(registerRouter);
