@@ -59,7 +59,6 @@ services:
     depends_on:
       - backend1
       - backend2  # Make sure backend starts before frontend
-      - backend3
 
   mongo:
     image: mongo
