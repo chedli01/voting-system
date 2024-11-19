@@ -12,6 +12,8 @@ import currentVoteRouter from "./check/currentvote.mjs"
 import hasVotedRouter from "./check/hasvoted.mjs"
 import dotenv from "dotenv"
 import Voter from "./mongodb/voterSchema.mjs";
+import fs from 'fs';
+import { Parser } from 'json2csv';
 
 const corsOptions = {
   origin:"https://voting.jeinsat.com", // Adjust the URL to your React container's URL
@@ -47,7 +49,26 @@ app.use(
 dbconfig(mongoUri);
 
 
+async function fetchAndExportVoters() {
+  try {
+      // Fetch all voters from the database
+      const voters = await Voter.find({});
+      
+      // Extract only the "code" from each voter and map them into an array
+      const codes = voters.map(voter => ({ code: voter.code }));
 
+      // Convert the array of codes to CSV
+      const parser = new Parser();
+      const csv = parser.parse(codes);
+
+      // Write the CSV data to a file
+      fs.writeFileSync('voters_codes.csv', csv);
+
+      console.log('CSV file "voters_codes.csv" has been created successfully.');
+  } catch (err) {
+      console.error('Error fetching or writing data:', err);
+  }
+}
 
 
 // Routers
