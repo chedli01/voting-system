@@ -12,7 +12,7 @@ axios.defaults.withCredentials = true;
 const initialState = {
     teamId: -1,
     hasVoted: false,
-   /*  userVote: null, */
+    userVote: null,
     mode: 'voteIsClosed', // 'voteIsOpen', 'thankYouForVoting'
 };
 

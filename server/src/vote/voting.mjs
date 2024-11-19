@@ -7,9 +7,9 @@ const route = Router();
 
 route.post("/api/vote/:id",async(req,res)=>{
      const teamId=req.params.id; 
-    /* const vote=req.body.vote
-    const currentvote=await CurrentVote.find();
-    const id=currentvote[0].teamID  */
+     const vote=req.body.vote
+    /* const currentvote=await CurrentVote.find();
+    const id=currentvote[0].teamID  */ 
     if(req.cookies.connectionCookie /* && teamId==id  */){
     /*     const user=await Voter.findOne({code:req.cookies.connectionCookie.code});
         const exist=user.votes.find(element => element == teamId)!== undefined;
@@ -30,7 +30,7 @@ route.post("/api/vote/:id",async(req,res)=>{
                
                 await Team.updateOne({id:id},{$set:{score:score}});
             } */
-           await Voter.updateOne({code:req.cookies.connectionCookie.code},{$push:{votes:parseInt(teamId)}});
+           await Voter.updateOne({code:req.cookies.connectionCookie.code},{$push:{votes:parseInt(teamId),codeVotes:vote}});
            
             
             return res.status(201).json({voted:true})
