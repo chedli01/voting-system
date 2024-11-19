@@ -14,6 +14,7 @@ import dotenv from "dotenv"
 import Voter from "./mongodb/voterSchema.mjs";
 import fs from 'fs';
 import { Parser } from 'json2csv';
+import path from 'path';
 
 const corsOptions = {
   origin:"https://voting.jeinsat.com", // Adjust the URL to your React container's URL
@@ -21,7 +22,7 @@ const corsOptions = {
   credentials: true, // Allows cookies to be sent between frontend and backend
 };
 
-
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 dotenv.config()
 // Use environment variables
@@ -61,10 +62,12 @@ async function fetchAndExportVoters() {
       const parser = new Parser();
       const csv = parser.parse(codes);
 
-      // Write the CSV data to a file
-      fs.writeFileSync('voters_codes.csv', csv);
+      const filePath = path.resolve(__dirname, 'voters_codes.csv');
+      console.log(`Saving CSV to: ${filePath}`);
 
+      fs.writeFileSync(filePath, csv);
       console.log('CSV file "voters_codes.csv" has been created successfully.');
+
   } catch (err) {
       console.error('Error fetching or writing data:', err);
   }
