@@ -34,7 +34,7 @@ route.post("/api/vote/:id",async(req,res)=>{
 
            
             
-            return res.status(201).json({voted:true,code:req.cookies.connectionCookie.code})
+            return res.status(201).json({voted:true,code:req.cookies.connectionCookie})
         }
        
         else{
