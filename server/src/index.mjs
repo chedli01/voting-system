@@ -63,12 +63,12 @@ function generateRandomCode(length) {
 
 // Generate codes and insert into database
 const codes = [];
-for (let i = 0; i < 600; i++) {
+for (let i = 0; i < 300; i++) {
   const code = generateRandomCode(5);
   codes.push(code);
 
   // Example database insertion (replace Voter.insertOne with actual DB logic)
-   Voter.insertOne({
+   Voter.create({
      code: code,
      votes: []
    });
