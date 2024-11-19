@@ -4,7 +4,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.3'
+          cpus: '0.5'
     build:
       context: ./server
       dockerfile: Dockerfile  # Dockerfile for the backend
@@ -21,32 +21,11 @@ services:
     depends_on:
       - mongo
 
-  backend3:
-    deploy:
-      resources:
-        limits:
-          cpus: '0.3'
-    build:
-      context: ./server
-      dockerfile: Dockerfile  # Dockerfile for the backend
-    environment:
-      - PORT=3002
-      - MONGO_URI=mongodb://mongo:27017/votingsystem?replicaSet=rs0
-      - SESSION_SECRET=secret  
-    networks:
-      - app-network  # Connect MongoDB to this network
-    ports:
-      - "3002:3002"
-    volumes:
-      - dist_data:/app/client/dist  # Mount shared volume here
-    depends_on:
-      - mongo
-
   backend2:
     deploy:
       resources:
         limits:
-          cpus: '0.3'
+          cpus: '0.4'
     build:
       context: ./server
       dockerfile: Dockerfile  # Dockerfile for the backend
