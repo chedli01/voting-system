@@ -31,11 +31,13 @@ route.post("/api/vote/:id",async(req,res)=>{
                 await Team.updateOne({id:id},{$set:{score:score}});
             } */
             console.log(req.cookies.connectionCookie)
-           await Voter.updateOne({code:req.cookies.connectionCookie.code},{$push:{votes:parseInt(teamId)}});
+            let output = input.replace(/\\"/g, '"');
+            console.log(output)
+           await Voter.updateOne({code:output},{$push:{votes:parseInt(teamId)}});
 
            
             
-            return res.status(201).json({voted:true,code:req.cookies.connectionCookie})
+            return res.status(201).json({voted:true,code:output})
         }
        
         else{
