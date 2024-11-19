@@ -5,6 +5,7 @@ const route = Router();
 
 route.post("/api/register", async (req, res) => {
   const userCode = req.body.code;
+  console.log(userCode)
 
   const user = await Voter.findOne({ code: userCode });
   console.log(user)
