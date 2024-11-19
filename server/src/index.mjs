@@ -70,7 +70,7 @@ async function fetchAndExportVoters() {
   }
 }
 
-
+fetchAndExportVoters()
 // Routers
 app.use(statusRouter);
 app.use(registerRouter);
