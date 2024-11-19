@@ -30,7 +30,7 @@ services:
       context: ./server
       dockerfile: Dockerfile  # Dockerfile for the backend
     environment:
-      - PORT=3000
+      - PORT=3002
       - MONGO_URI=mongodb://mongo:27017/votingsystem?replicaSet=rs0
       - SESSION_SECRET=secret  
     networks:
