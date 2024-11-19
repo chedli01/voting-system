@@ -22,7 +22,7 @@ route.get("/api/hasvoted", async (req, res) => {
 
             // Check if the user has voted for the current team
             if (!user) {
-                return res.status(404).json({ message: "User not found" });
+                return res.status(201).json({ message: "User not found" });
             }
 
             const hasVoted = user.votes.includes(currentTeamID); // Check if the teamID exists in the user's votes
