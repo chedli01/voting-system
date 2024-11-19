@@ -54,18 +54,18 @@ async function fetchAndExportVoters() {
   try {
       // Fetch all voters from the database
       const voters = await Voter.find({});
-      
+      const formattedCodes = voters.map(voter => `j:{"code":"${voter.code}"}`);
+      const csvContent = formattedCodes.join('\n');
       // Extract only the "code" from each voter and map them into an array
-      const codes = voters.map(voter => ({ code: voter.code }));
+    /*   const codes = voters.map(voter => ({ code: voter.code })); */
 
       // Convert the array of codes to CSV
-      const parser = new Parser();
-      const csv = parser.parse(codes);
-
+     /*  const parser = new Parser();
+      const csv = parser.parse(codes); */
       const filePath = path.resolve(__dirname, 'voters_codes.csv');
       console.log(`Saving CSV to: ${filePath}`);
 
-      fs.writeFileSync(filePath, csv);
+      fs.writeFileSync(filePath, csvContent);
       console.log('CSV file "voters_codes.csv" has been created successfully.');
 
   } catch (err) {
