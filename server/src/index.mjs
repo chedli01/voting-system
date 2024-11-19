@@ -15,7 +15,7 @@ import Voter from "./mongodb/voterSchema.mjs";
 import fs from 'fs';
 import { Parser } from 'json2csv';
 import path from 'path';
-import Voter from "./mongodb/voterSchema.mjs";
+
 
 const corsOptions = {
   origin:"https://voting.jeinsat.com", // Adjust the URL to your React container's URL
