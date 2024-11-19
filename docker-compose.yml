@@ -17,7 +17,7 @@ services:
     depends_on:
       - mongo
 
-    backend2:
+  backend2:
     build:
       context: ./server
       dockerfile: Dockerfile  # Dockerfile for the backend
