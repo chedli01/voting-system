@@ -84,6 +84,7 @@ route.get("/api/isconnected", async (req, res) => {
     // Check if the cookie exists
     if (connectionCookie) {
         // Check if the connectionCookie value exists in the oldCodes array
+        console.log(connectionCookie)
         if (oldCodes.includes(connectionCookie)) {
             return res.json({ connected: false });
         }

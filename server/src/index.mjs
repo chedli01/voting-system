@@ -50,33 +50,6 @@ app.use(
 
 dbconfig(mongoUri);
 
-
-// Function to generate a random code
-function generateRandomCode(length) {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let result = '';
-  for (let i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * characters.length));
-  }
-  return result;
-}
-
-// Generate codes and insert into database
-const codes = [];
-for (let i = 0; i < 300; i++) {
-  const code = generateRandomCode(5);
-  codes.push(code);
-
-  // Example database insertion (replace Voter.insertOne with actual DB logic)
-   Voter.create({
-     code: code,
-     votes: []
-   });
-}
-
-// Save generated codes to a text file
-fs.writeFileSync('codes.txt', codes.join('\n'));
-
 // Routers
 app.use(statusRouter);
 app.use(registerRouter);
