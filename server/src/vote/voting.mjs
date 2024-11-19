@@ -11,6 +11,8 @@ route.post("/api/vote/:id",async(req,res)=>{
     const currentvote=await CurrentVote.find();
     const id=currentvote[0].teamID  */
     if(req.cookies.connectionCookie /* && teamId==id  */){
+
+            const rawCookie = req.cookies.connectionCookie.j; 
     /*     const user=await Voter.findOne({code:req.cookies.connectionCookie.code});
         const exist=user.votes.find(element => element == teamId)!== undefined;
          */
@@ -30,12 +32,13 @@ route.post("/api/vote/:id",async(req,res)=>{
                
                 await Team.updateOne({id:id},{$set:{score:score}});
             } */
-           const code = JSON.parse(req.cookies.connectionCookie);
-           await Voter.updateOne({code:code},{$push:{votes:parseInt(teamId)}});
+           const code = JSON.parse(rawCookie);
+           const parsedCode = code.code
+           await Voter.updateOne({code:parsedCode},{$push:{votes:parseInt(teamId)}});
 
            
             
-            return res.status(201).json({voted:true,code:code})
+            return res.status(201).json({voted:true,code:parsedCode})
         }
        
         else{
