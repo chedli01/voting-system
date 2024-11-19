@@ -34,6 +34,7 @@ route.post("/api/vote/:id",async(req,res)=>{
             let output = (req.cookies.connectionCookie).replace(/\\"/g, '"');
             console.log(output) */
            await Voter.updateOne({code:req.body.code},{$push:{votes:parseInt(teamId)}});
+           console.log("Vote completed")
 
            
             
