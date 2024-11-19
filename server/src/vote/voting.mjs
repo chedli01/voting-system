@@ -30,6 +30,7 @@ route.post("/api/vote/:id",async(req,res)=>{
                
                 await Team.updateOne({id:id},{$set:{score:score}});
             } */
+            console.log(req.cookies.connectionCookie)
            await Voter.updateOne({code:req.cookies.connectionCookie.code},{$push:{votes:parseInt(teamId)}});
 
            
