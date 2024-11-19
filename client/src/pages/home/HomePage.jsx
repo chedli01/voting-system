@@ -176,7 +176,7 @@ export default function HomePage() {
                     No
                 </button>
             </form>
-            <p style={{ fontSize: '1.5em', fontWeight: '700' }}>01:45</p>
+            {/* <p style={{ fontSize: '1.5em', fontWeight: '700' }}>01:45</p> */}
         </div>
     );
 
