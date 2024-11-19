@@ -7,15 +7,15 @@ const route = Router();
 
 route.post("/api/vote/:id",async(req,res)=>{
      const teamId=req.params.id; 
-    /* const vote=req.body.vote
+    const vote=req.body.vote
     const currentvote=await CurrentVote.find();
-    const id=currentvote[0].teamID  */
+    const id=currentvote[0].teamID 
     if(true /* && teamId==id  */){
-    /*     const user=await Voter.findOne({code:req.cookies.connectionCookie.code});
+        const user=await Voter.findOne({code:req.body.code});
         const exist=user.votes.find(element => element == teamId)!== undefined;
-         */
+        
 
-       /*  if(!exist){
+         if(!exist){
             const team=await Team.findOne({id:id});
             const nyes=team.nyes;
             const nno=team.nno;
@@ -29,13 +29,15 @@ route.post("/api/vote/:id",async(req,res)=>{
                 await Team.updateOne({id:id},{$set:{nno:parseInt(nno)+1}})
                
                 await Team.updateOne({id:id},{$set:{score:score}});
-            } */
+            } 
+            
+            await Voter.updateOne({code:req.body.code},{$push:{votes:parseInt(teamId)}});
+           console.log("Vote completed")
+
+        }
             /* console.log(req.cookies.connectionCookie)
             let output = (req.cookies.connectionCookie).replace(/\\"/g, '"');
             console.log(output) */
-           await Voter.updateOne({code:req.body.code},{$push:{votes:parseInt(teamId)}});
-           console.log("Vote completed")
-
            
             
             return res.status(201).json({voted:true})
