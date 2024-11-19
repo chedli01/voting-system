@@ -1,13 +1,32 @@
 version: '3'
 services:
-  backend:
+  backend1:
     build:
       context: ./server
       dockerfile: Dockerfile  # Dockerfile for the backend
+    environment:
+      - PORT=3000  
     networks:
       - app-network  # Connect MongoDB to this network
     ports:
       - "3000:3000"
+    volumes:
+      - dist_data:/app/client/dist  # Mount shared volume here
+    env_file:
+      - ./server/.env
+    depends_on:
+      - mongo
+
+    backend2:
+    build:
+      context: ./server
+      dockerfile: Dockerfile  # Dockerfile for the backend
+    environment:
+      - PORT=3001  
+    networks:
+      - app-network  # Connect MongoDB to this network
+    ports:
+      - "3001:3001"
     volumes:
       - dist_data:/app/client/dist  # Mount shared volume here
     env_file:
