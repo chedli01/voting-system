@@ -24,7 +24,7 @@ route.post("/api/verifyPosition",async(req,res)=>{
     const accuracy=req.body.accuracy
     /* const radius = 10; */
     //high radius for testing purposes
-    const radius = 40;
+    const radius = 50;
     if(accuracy>eventAccuracy){
         adjust+=(accuracy-eventAccuracy)
     }
