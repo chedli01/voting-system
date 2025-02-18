@@ -14,7 +14,6 @@ export default function HomePage() {
     const [teamId, setTeamId] = useState(1);
     const [userVote, setUserVote] = useState(null);
     const [hasVoted,setHasVoted] = useState(false);
-    console.log(hasVoted)
     const navigate = useNavigate();
 
     const voteSubmitHandler = async (event) => {
@@ -79,7 +78,6 @@ export default function HomePage() {
 
     useEffect(() => {
         const token = Cookies.get("authToken")
-        console.log(token)
         if(!token){
             navigate('/register')
         }
