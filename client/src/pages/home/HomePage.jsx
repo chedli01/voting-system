@@ -75,16 +75,16 @@ export default function HomePage() {
         </div>
     )
 
-    useEffect(() => {
-        // Check connection status on mount
-        axios.get("http://localhost:3000/isconnected").then(
-            (res) => {
-                if (!res.data.connected) {
-                    navigate("/register");
-                }
-            }
-        );
-    }, [navigate]); // Dependency on navigate
+    // useEffect(() => {
+    //     // Check connection status on mount
+    //     axios.get("http://localhost:3000/isconnected").then(
+    //         (res) => {
+    //             if (!res.data.connected) {
+    //                 navigate("/register");
+    //             }
+    //         }
+    //     );
+    // }, [navigate]); // Dependency on navigate
 
     useEffect(() => {
         // Fetch the team ID on mount

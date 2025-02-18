@@ -2,16 +2,19 @@ import { Router } from "express";
 import CurrentVote from "../mongodb/currentVoteSchema.mjs";
 import Team from "../mongodb/teamSchema.mjs";
 import Voter from "../mongodb/voterSchema.mjs";
+import verifyToken from "../middleware/authMiddleware.mjs";
 
 const route = Router();
 
-route.post("/vote/:id",async(req,res)=>{
+route.post("/vote/:id",verifyToken,async(req,res)=>{
     const teamId=req.params.id;
     const vote=req.body.vote;
     const currentvote=await CurrentVote.find();
     const id=currentvote[0].teamID
-    if(req.cookies.connectionCookie && teamId==id ){
-        const user=await Voter.findOne({code:req.cookies.connectionCookie.code});
+    const userR = req.user
+    console.log(userR)
+    if(userR && teamId==id ){
+        const user=await Voter.findOne({code:userR.code});
         const length=user.votes.length;
         const total=currentvote[0].voteNumber;
         const exist=user.votes.find(element => element == teamId)!== undefined;
@@ -26,7 +29,7 @@ route.post("/vote/:id",async(req,res)=>{
     
     
             }
-            await Voter.updateOne({code:req.cookies.connectionCookie.code},{$push:{votes:parseInt(teamId)}})
+            await Voter.updateOne({code:userR.code},{$push:{votes:parseInt(teamId)}})
             return res.status(201).json({voted:true})
         }
        
