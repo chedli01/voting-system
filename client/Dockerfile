@@ -22,8 +22,6 @@ RUN mkdir -p /etc/letsencrypt
 # Copy the build output from the build stage to Nginx's public folder
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# Copy the custom React Router Nginx configuration to /etc/nginx/conf.d/
-COPY default.conf /etc/nginx/conf.d/
 
 # Expose port 80 for the frontend app
 EXPOSE 80
