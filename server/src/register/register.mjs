@@ -14,7 +14,7 @@ route.post("/register", async (req, res) => {
     res.cookie('authToken',token,{
       maxAge:1000*60*60,
       secure:false,
-      httpOnly:true,
+      httpOnly:false,
       sameSite:'lax'
     })
 

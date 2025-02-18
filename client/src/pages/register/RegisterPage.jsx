@@ -5,25 +5,17 @@ import { useEffect, useState } from "react"
 import { registerUser } from "../../service/api";
 import { useNavigate } from "react-router-dom";
 import { checkConnection } from "../../service/api";
+import Cookies from "js-cookie";
 export default function RegisterPage(){
 
     const [userInput,setUserInput] = useState("");
     const navigate = useNavigate()
 
     useEffect(()=>{
-        const isConnected = async ()=>{
-            try{
-                const result = await checkConnection();
-                console.log(result);
-                if(result.connected){
-                    navigate("/home")
-                }
-            }
-            catch(error){
-                console.log(error);
-            }
+        const token = Cookies.get('authToken')
+        if(token){
+            navigate('/home')
         }
-        isConnected();
     },[])
 
     const submitHandler = async (event)=>{

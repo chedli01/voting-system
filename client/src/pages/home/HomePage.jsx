@@ -5,6 +5,8 @@ import './HomePage.css';
 import hourGlass from "../../assets/time.png";
 import checkIcon from "../../assets/check-icon.png"
 import { didUserVote, getCurrentTeam, sendVote, voteForId } from "../../service/api";
+import Cookies from "js-cookie";
+
 
 axios.defaults.withCredentials = true;
 
@@ -75,16 +77,13 @@ export default function HomePage() {
         </div>
     )
 
-    // useEffect(() => {
-    //     // Check connection status on mount
-    //     axios.get("http://localhost:3000/isconnected").then(
-    //         (res) => {
-    //             if (!res.data.connected) {
-    //                 navigate("/register");
-    //             }
-    //         }
-    //     );
-    // }, [navigate]); // Dependency on navigate
+    useEffect(() => {
+        const token = Cookies.get("authToken")
+        console.log(token)
+        if(!token){
+            navigate('/register')
+        }
+    }, []); // Dependency on navigate
 
     useEffect(() => {
         // Fetch the team ID on mount
