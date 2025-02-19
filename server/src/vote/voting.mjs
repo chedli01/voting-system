@@ -7,7 +7,7 @@ import mongoose from "mongoose";
 
 const route = Router();
 
-route.post("/vote/:id",verifyToken,async(req,res)=>{
+route.post("/api/vote/:id",verifyToken,async(req,res)=>{
     const session = await mongoose.startSession();
     session.startTransaction();
 

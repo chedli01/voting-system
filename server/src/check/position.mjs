@@ -13,7 +13,7 @@ function getDistance(lat1, lon1, lat2, lon2) {
     return R * c;
 }
 
-route.post("/verifyPosition",async(req,res)=>{
+route.post("/api/verifyPosition",async(req,res)=>{
     const eventLatitude = 36.8432034554802; // replace with your event's latitude
     const eventLongitude = 10.197543447168602; // replace with your event's longitude
 

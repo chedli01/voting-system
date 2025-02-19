@@ -5,7 +5,7 @@ import verifyToken from "../middleware/authMiddleware.mjs";
 
 const route = Router();
 
-route.get("/hasvoted",verifyToken,async(req,res)=>{
+route.get("/api/hasvoted",verifyToken,async(req,res)=>{
     const team=await CurrentVote.find();
     const currentTeamID=team[0].teamID;
     const code=req.user?.code;
