@@ -13,11 +13,13 @@ import votingRouter from "./vote/voting.mjs"
 import sendingVoteRouter from "./vote/sendvote.mjs"
 import currentVoteRouter from "./check/currentvote.mjs"
 import hasVotedRouter from "./check/hasvoted.mjs"
+import dotenv from 'dotenv'
 const app = express();
 const corsOptions = {
-  origin: ["http://localhost:5173"],
+  origin: ["*"],
   credentials: true,
 };
+dotenv.config();
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
@@ -36,8 +38,11 @@ app.use(
 );
 const PORT = 3000 || process.env.PORT;
 
+const mongoUri = process.env.MONGO_URI;
 
-dbconfig();
+
+
+dbconfig(mongoUri);
 
 
 //////////////////////////
